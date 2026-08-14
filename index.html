@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>Four Seasons × Salesforce — Target State</title>
+<style>
+  :root{
+    color-scheme: light;
+    --ink:#1a1a1a; --ink-soft:#4a4a4a; --ink-faint:#8a8a8a;
+    --line:#e6e2da; --paper:#faf8f4; --paper-2:#ffffff;
+    --gold:#9a7b4f; --gold-soft:#c4a876; --gold-bg:#f4ecdd;
+    --navy:#1c2a3a; --navy-soft:#2d4257; --teal:#3a6b6b; --accent:#8a5a3a;
+    --shadow: 0 1px 3px rgba(28,42,58,.06), 0 8px 24px rgba(28,42,58,.05);
+    --shadow-lg: 0 2px 6px rgba(28,42,58,.08), 0 20px 48px rgba(28,42,58,.10);
+    --maxw: 1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+  body{font-family:Georgia,'Times New Roman',serif;color:var(--ink);background:var(--paper);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  .sans{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;}
+  img,video{max-width:100%;display:block;}
+
+  /* ---------- top bar ---------- */
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;
+    padding:14px 32px;background:rgba(250,248,244,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
+  .topbar .brand{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--navy);font-weight:600;}
+  .topbar .brand span{color:var(--gold);}
+  .topbar nav{display:flex;gap:22px;font-size:12px;letter-spacing:.04em;}
+  .topbar nav a{color:var(--ink-faint);text-decoration:none;transition:color .2s;}
+  .topbar nav a:hover{color:var(--gold);}
+  @media(max-width:860px){.topbar nav{display:none;} .topbar{padding:12px 20px;}}
+
+  /* ---------- hero (with video slot) ---------- */
+  .hero{position:relative;min-height:92vh;display:flex;flex-direction:column;justify-content:center;
+    padding:120px 8vw 80px;border-bottom:1px solid var(--line);overflow:hidden;
+    background:radial-gradient(1200px 600px at 80% -10%, #f4ecdd 0%, rgba(244,236,221,0) 60%),
+      linear-gradient(180deg,#faf8f4 0%,#f6f2ea 100%);}
+  .hero-media{position:absolute;inset:0;z-index:0;object-fit:cover;width:100%;height:100%;opacity:0;transition:opacity 1.2s ease;}
+  .hero-media.loaded{opacity:1;}
+  .hero-scrim{position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:linear-gradient(90deg, rgba(250,248,244,.94) 0%, rgba(250,248,244,.82) 42%, rgba(250,248,244,.35) 100%);}
+  .hero-media.loaded ~ .hero-scrim{background:linear-gradient(90deg, rgba(12,18,26,.82) 0%, rgba(12,18,26,.55) 45%, rgba(12,18,26,.15) 100%);}
+  .hero > .hero-inner{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;width:100%;}
+  body.has-video .hero .eyebrow{color:var(--gold-soft);}
+  body.has-video .hero h1{color:#fff;}
+  body.has-video .hero h1 em{color:var(--gold-soft);}
+  body.has-video .hero .sub{color:#eef1f4;}
+  body.has-video .hero .setup{color:#dfe4ea;border-left-color:var(--gold-soft);}
+  body.has-video .hero .scroll-cue{color:#d7dde3;}
+
+  .hero .eyebrow{font-family:-apple-system,sans-serif;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:28px;}
+  .hero h1{font-size:clamp(32px,5.2vw,66px);line-height:1.08;font-weight:400;color:var(--navy);max-width:16ch;letter-spacing:-.01em;}
+  .hero h1 em{font-style:italic;color:var(--gold);}
+  .hero .sub{font-size:clamp(16px,1.9vw,21px);color:var(--ink-soft);max-width:52ch;margin-top:26px;font-style:italic;}
+  .hero .setup{margin-top:34px;padding:0 0 0 22px;max-width:56ch;border-left:3px solid var(--gold-soft);
+    font-family:-apple-system,sans-serif;font-size:15px;color:var(--navy-soft);line-height:1.7;}
+  .scroll-cue{margin-top:52px;font-family:-apple-system,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:10px;}
+  .scroll-cue .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:bob 1.6s ease-in-out infinite;}
+  @keyframes bob{0%,100%{transform:translateY(0);opacity:1}50%{transform:translateY(5px);opacity:.4}}
+  @media(max-width:640px){.hero{padding:108px 7vw 60px;min-height:84vh;} .hero .setup{margin-top:26px;}}
+
+  /* ---------- ACT LABEL / dividers ---------- */
+  .act-band{max-width:var(--maxw);margin:0 auto;padding:0 7vw;}
+  .act-label{font-family:-apple-system,sans-serif;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);
+    display:flex;align-items:center;gap:14px;margin-bottom:8px;}
+  .act-label::before{content:"";width:40px;height:1px;background:var(--gold-soft);}
+
+  /* =========================================================
+     ACT 1 — THE STORY (uninterrupted narrative, no diagrams)
+     ========================================================= */
+  .act-story{max-width:760px;margin:0 auto;padding:96px 7vw 40px;}
+  .act-story .kicker{font-family:-apple-system,sans-serif;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:22px;display:flex;align-items:center;gap:14px;}
+  .act-story .kicker::before{content:"";width:40px;height:1px;background:var(--gold-soft);}
+  .act-story h2{font-size:clamp(28px,4vw,46px);font-weight:400;color:var(--navy);line-height:1.14;letter-spacing:-.01em;margin-bottom:28px;}
+  .act-story h2 em{font-style:italic;color:var(--gold);}
+  .story-p{font-size:clamp(18px,2.1vw,22px);color:var(--ink-soft);margin-bottom:26px;line-height:1.6;}
+  .story-p.lead{font-size:clamp(20px,2.4vw,26px);color:var(--ink);}
+  .story-p strong{color:var(--ink);font-weight:600;}
+  .story-p .who{color:var(--navy);font-style:italic;}
+  /* the build — escalating scene lines, not a table. Each tightens the moment. */
+  .build{margin:14px 0 8px;}
+  .bline{font-size:clamp(20px,2.5vw,27px);line-height:1.35;color:var(--ink);margin:0 0 30px;max-width:26ch;
+    opacity:0;transform:translateY(16px);transition:opacity .8s ease,transform .8s ease;}
+  .bline.in{opacity:1;transform:none;}
+  .bline b{color:var(--navy);font-weight:600;}
+  .bline em{font-style:italic;color:var(--gold);}
+  .bline .q{color:var(--ink-faint);font-family:-apple-system,sans-serif;font-size:.62em;letter-spacing:.16em;text-transform:uppercase;display:block;margin-bottom:8px;font-weight:700;}
+  /* each line indents a touch further — the scene visibly tightening */
+  .build .bline:nth-child(2){margin-left:2.2vw;}
+  .build .bline:nth-child(3){margin-left:4.4vw;}
+  .build .bline:nth-child(4){margin-left:6.6vw;}
+  @media(max-width:600px){.build .bline{margin-left:0!important;}}
+
+  /* the moment — Act 1 climax */
+  .moment{margin:38px 0 8px;padding:32px 34px;background:linear-gradient(135deg,#1c2a3a,#2d4257);color:#f0ece3;border-radius:16px;box-shadow:var(--shadow-lg);}
+  .moment .m-tag{font-family:-apple-system,sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-soft);font-weight:700;margin-bottom:14px;}
+  .moment .m-line{font-size:clamp(19px,2.3vw,24px);line-height:1.45;color:#fff;font-style:italic;margin-bottom:18px;}
+  .moment .m-cascade{font-family:-apple-system,sans-serif;font-size:14px;color:#c9d3dd;letter-spacing:.02em;}
+  .moment .m-cascade b{color:var(--gold-soft);font-weight:600;}
+  .story-close{font-size:clamp(18px,2.1vw,22px);color:var(--navy);font-style:italic;margin:34px 0 0;line-height:1.5;}
+
+  /* ---------- STAKES — dark tension beat before Jane ---------- */
+  .stakes{background:linear-gradient(160deg,#141d28 0%,#1c2a3a 60%,#22323f 100%);color:#e8ecf1;
+    padding:120px 8vw;border-top:1px solid var(--line);}
+  .stakes .s-inner{max-width:820px;margin:0 auto;}
+  .stakes .s-kicker{font-family:-apple-system,sans-serif;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-soft);margin-bottom:34px;
+    opacity:0;transform:translateY(14px);transition:opacity .8s ease,transform .8s ease;}
+  .stakes .s-line{font-size:clamp(24px,3.6vw,42px);font-weight:400;line-height:1.28;letter-spacing:-.01em;color:#fff;margin:0 0 22px;max-width:22ch;
+    opacity:0;transform:translateY(18px);transition:opacity .9s ease,transform .9s ease;}
+  .stakes .s-line em{font-style:italic;color:var(--gold-soft);}
+  .stakes .s-line.dim{color:#9fb0c0;}
+  .stakes .s-need{font-size:clamp(20px,2.6vw,30px);font-weight:400;color:#fff;margin-top:20px;max-width:24ch;
+    opacity:0;transform:translateY(18px);transition:opacity .9s ease,transform .9s ease;}
+  .stakes .s-need b{color:var(--gold-soft);font-weight:600;}
+  .stakes.in .s-kicker,.stakes.in .s-line,.stakes.in .s-need{opacity:1;transform:none;}
+  .stakes.in .s-line:nth-of-type(2){transition-delay:.15s;}
+  .stakes.in .s-need{transition-delay:.35s;}
+
+  /* ---------- ACT DIVIDER ---------- */
+  .divider{background:linear-gradient(180deg,#f6f2ea,#efe8db);border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    text-align:center;padding:76px 7vw;margin-top:56px;}
+  .divider .d-kicker{font-family:-apple-system,sans-serif;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;}
+  .divider h2{font-size:clamp(26px,3.6vw,42px);font-weight:400;color:var(--navy);max-width:20ch;margin:0 auto;line-height:1.15;}
+  .divider h2 em{font-style:italic;color:var(--gold);}
+  .divider .d-sub{font-family:-apple-system,sans-serif;font-size:15px;color:var(--ink-soft);max-width:52ch;margin:20px auto 0;line-height:1.6;}
+
+  /* =========================================================
+     ACT 2 — THE ARCHITECTURE (one continuous build)
+     Desktop: captions left, sticky building diagram right.
+     Mobile: caption then its diagram slice, stacked — but this is
+     ONE register now (all architecture), so no whiplash.
+     ========================================================= */
+  .arch{max-width:1320px;margin:0 auto;}
+  .arch-grid{display:grid;grid-template-columns:1fr 1fr;}
+  .arch-steps{padding:0 4vw;}
+  .arch-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;padding:60px 3vw;}
+  .astep{min-height:88vh;display:flex;flex-direction:column;justify-content:center;padding:60px 0;
+    opacity:.3;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
+  .astep.active{opacity:1;transform:none;}
+  .astep .s-num{font-family:-apple-system,sans-serif;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+  .astep .s-num::before{content:"";width:30px;height:1px;background:var(--gold-soft);}
+  .astep h3{font-size:clamp(23px,3vw,34px);font-weight:400;color:var(--navy);line-height:1.18;margin-bottom:16px;}
+  .astep h3 em{font-style:italic;color:var(--gold);}
+  .astep p{font-size:16.5px;color:var(--ink-soft);max-width:44ch;margin-bottom:14px;}
+  .astep p strong{color:var(--ink);font-weight:600;}
+  .astep .why{font-family:-apple-system,sans-serif;font-size:13.5px;color:var(--ink-faint);max-width:42ch;margin-top:4px;line-height:1.6;}
+  .astep .why b{color:var(--navy-soft);font-weight:600;}
+
+  /* diagram */
+  .diagram{width:100%;max-width:520px;background:var(--paper-2);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-lg);padding:24px 22px;}
+  .diagram .dg-title{font-family:-apple-system,sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);text-align:center;margin-bottom:18px;}
+  .layer{border:0 solid var(--line);border-radius:12px;background:var(--paper);max-height:0;padding:0 14px;margin-bottom:0;overflow:hidden;opacity:0;transform:translateY(10px);
+    transition:max-height .55s ease,padding .45s ease,margin .45s ease,border-width .3s ease,opacity .5s ease .1s,transform .5s ease .1s,border-color .6s ease,background .6s ease;}
+  .layer.show{max-height:360px;padding:12px 14px;margin-bottom:12px;border-width:1px;opacity:1;transform:none;}
+  .layer.hub.show{border-width:1.5px;}
+  .layer .lname{font-family:-apple-system,sans-serif;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:9px;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  .layer .lname .badge{font-size:9px;letter-spacing:.1em;padding:2px 7px;border-radius:20px;background:var(--gold-bg);color:var(--accent);font-weight:700;white-space:nowrap;}
+  .chips{display:flex;flex-wrap:wrap;gap:7px;}
+  .chip{font-family:-apple-system,sans-serif;font-size:11.5px;padding:6px 11px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--navy-soft);white-space:nowrap;display:flex;align-items:center;gap:6px;}
+  .chip .m{width:15px;height:15px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:9px;color:#fff;}
+  .layer.sources{background:linear-gradient(180deg,#fbfaf7,#f6f2ea);}
+  .chip.src .m{background:var(--navy-soft);}
+  .hub{border:1.5px solid var(--gold-soft);background:linear-gradient(180deg,#fefcf8,#f4ecdd);}
+  .hub .lname{color:var(--accent);}
+  .hub-steps{display:flex;flex-direction:column;gap:6px;margin-top:4px;}
+  .step{display:flex;align-items:center;gap:9px;font-family:-apple-system,sans-serif;font-size:12px;color:var(--navy);padding:6px 9px;background:#fff;border:1px solid #ece3d2;border-radius:7px;opacity:0;transform:translateX(-8px);transition:opacity .5s ease,transform .5s ease;}
+  .step.show{opacity:1;transform:none;}
+  .step .tick{width:16px;height:16px;border-radius:50%;background:var(--gold);color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;flex:none;}
+  .step b{font-weight:600;} .step small{color:var(--ink-faint);margin-left:auto;font-size:10.5px;}
+  .golden{text-align:center;padding:11px;border-radius:9px;margin-top:10px;background:linear-gradient(135deg,var(--gold),var(--gold-soft));color:#fff;font-family:-apple-system,sans-serif;font-weight:700;font-size:12.5px;letter-spacing:.12em;box-shadow:0 6px 16px rgba(154,123,79,.32);opacity:0;transform:scale(.9);transition:opacity .6s ease,transform .6s ease;}
+  .golden.show{opacity:1;transform:none;}
+  .golden small{display:block;font-weight:500;font-size:10px;letter-spacing:.06em;opacity:.9;margin-top:3px;}
+  .chip.app .m{background:#1c6bba;} .chip.app.mk .m{background:#e0723a;} .chip.app.ag .m{background:var(--gold);}
+  .layer.activate{background:linear-gradient(180deg,#f3f7f7,#e9f0f0);border-color:#cfe0e0;}
+  .layer.activate .lname{color:var(--teal);}
+  .chip.act .m{background:var(--teal);}
+  .connector{text-align:center;color:var(--gold-soft);font-size:16px;line-height:1;max-height:0;margin:0;overflow:hidden;opacity:0;transition:max-height .4s ease,margin .4s ease,opacity .5s ease;}
+  .connector.show{opacity:1;max-height:22px;margin:-4px 0 4px;}
+  .trust-rail{border-radius:10px;background:var(--navy);color:#dfe6ee;overflow:hidden;max-height:0;padding:0 14px;margin-top:0;opacity:0;transform:translateY(10px);transition:max-height .55s ease,padding .45s ease,margin .45s ease,opacity .6s ease,transform .6s ease;}
+  .trust-rail.show{opacity:1;transform:none;max-height:220px;padding:12px 14px;margin-top:14px;}
+  .trust-rail .tr-h{font-family:-apple-system,sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-soft);font-weight:700;margin-bottom:8px;}
+  .trust-rail .tr-items{display:flex;flex-wrap:wrap;gap:6px;}
+  .trust-rail .tri{font-family:-apple-system,sans-serif;font-size:11px;padding:4px 9px;border-radius:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#cdd6df;}
+
+  /* ---------- metrics ---------- */
+  .metrics{background:linear-gradient(135deg,#1c2a3a,#243848);color:#fff;padding:90px 8vw;text-align:center;}
+  .metrics .eyebrow{font-family:-apple-system,sans-serif;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-soft);margin-bottom:16px;}
+  .metrics h2{font-size:clamp(24px,3vw,36px);font-weight:400;margin-bottom:52px;color:#fff;}
+  .metrics h2 em{font-style:italic;color:var(--gold-soft);}
+  .metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;max-width:1000px;margin:0 auto;}
+  @media(max-width:760px){.metric-grid{grid-template-columns:repeat(2,1fr);gap:40px 20px;}}
+  .metric .big{font-size:clamp(38px,6vw,64px);font-family:-apple-system,sans-serif;font-weight:200;color:var(--gold-soft);line-height:1;}
+  .metric .big .arw{font-size:.55em;vertical-align:middle;}
+  .metric .cap{font-family:-apple-system,sans-serif;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#aeb9c4;margin-top:14px;line-height:1.5;}
+
+  /* ---------- roadmap ---------- */
+  .roadmap{background:var(--paper);padding:88px 8vw;border-top:1px solid var(--line);}
+  .roadmap .rhead{text-align:center;max-width:60ch;margin:0 auto 56px;}
+  .roadmap .eyebrow{font-family:-apple-system,sans-serif;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+  .roadmap h2{font-size:clamp(24px,3.2vw,38px);font-weight:400;color:var(--navy);}
+  .roadmap h2 em{font-style:italic;color:var(--gold);}
+  .roadmap .rsub{font-family:-apple-system,sans-serif;font-size:14px;color:var(--ink-faint);margin-top:14px;}
+  .phases{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:1050px;margin:0 auto;}
+  @media(max-width:760px){.phases{grid-template-columns:1fr;gap:16px;}}
+  .phase{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:26px 24px;box-shadow:var(--shadow);position:relative;overflow:hidden;}
+  .phase::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-soft));}
+  .phase .pnum{font-family:-apple-system,sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:6px;}
+  .phase h3{font-size:22px;font-weight:400;color:var(--navy);margin-bottom:14px;}
+  .phase ul{list-style:none;}
+  .phase li{font-family:-apple-system,sans-serif;font-size:13.5px;color:var(--ink-soft);padding:7px 0 7px 20px;position:relative;line-height:1.5;border-bottom:1px solid var(--line);}
+  .phase li:last-child{border-bottom:none;}
+  .phase li::before{content:"→";position:absolute;left:0;color:var(--gold-soft);}
+
+  /* ---------- trust footer ---------- */
+  .trustfoot{background:var(--paper-2);padding:80px 8vw 60px;border-top:1px solid var(--line);text-align:center;}
+  .trustfoot .eyebrow{font-family:-apple-system,sans-serif;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;}
+  .trustfoot h2{font-size:clamp(24px,3.2vw,38px);font-weight:400;color:var(--navy);font-style:italic;max-width:22ch;margin:0 auto 18px;}
+  .trustfoot .lede{font-size:17px;color:var(--ink-soft);max-width:60ch;margin:0 auto 40px;}
+  .trust-badges{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;max-width:820px;margin:0 auto;}
+  .tb{font-family:-apple-system,sans-serif;font-size:13px;color:var(--navy-soft);padding:11px 18px;border:1px solid var(--line);border-radius:30px;background:var(--paper);box-shadow:var(--shadow);}
+  .tb b{color:var(--navy);font-weight:600;}
+  .endnote{max-width:640px;margin:56px auto 0;padding-top:28px;border-top:1px solid var(--line);font-family:-apple-system,sans-serif;font-size:12px;color:var(--ink-faint);line-height:1.7;text-align:center;}
+  .colophon{text-align:center;padding:30px;font-family:-apple-system,sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);background:var(--paper);}
+
+  /* ===== MOBILE: architecture stops being side-by-side ===== */
+  @media(max-width:900px){
+    .arch-grid{display:block;max-width:640px;margin:0 auto;}
+    .arch-steps{padding:0 7vw;}
+    .arch-sticky{display:none;}
+    .astep{min-height:auto;padding:44px 0 6px;opacity:1;transform:none;}
+    .astep .mini-diagram{display:block;margin:14px 0 8px;}
+  }
+  .mini-diagram{display:none;}
+  @media(max-width:900px){
+    .mini-diagram .diagram{max-width:100%;padding:18px 16px;}
+    .mini-diagram .layer{max-height:400px;padding:12px 14px;margin-bottom:10px;border-width:1px;opacity:1;transform:none;}
+    .mini-diagram .layer.hub{border-width:1.5px;}
+    .mini-diagram .step,.mini-diagram .golden{opacity:1;transform:none;}
+    .mini-diagram .connector{opacity:1;max-height:22px;margin:-4px 0 4px;}
+    .mini-diagram .trust-rail{opacity:1;transform:none;max-height:220px;padding:12px 14px;margin-top:12px;}
+  }
+  @media(prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important;}
+    .layer,.step,.golden,.connector,.trust-rail,.astep{opacity:1!important;transform:none!important;max-height:none!important;}
+    .bline,.stakes .s-kicker,.stakes .s-line,.stakes .s-need{opacity:1!important;transform:none!important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">Four Seasons <span>×</span> Salesforce</div>
+  <nav>
+    <a href="#story">The Moment</a>
+    <a href="#how">How It's Powered</a>
+    <a href="#outcomes">Outcomes</a>
+    <a href="#roadmap">Roadmap</a>
+  </nav>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <video class="hero-media" id="heroVideo" autoplay muted loop playsinline preload="none" poster="" aria-hidden="true">
+    <source src="hero.mp4" type="video/mp4">
+  </video>
+  <div class="hero-scrim"></div>
+  <div class="hero-inner">
+    <div class="eyebrow">Salesforce Target State</div>
+    <h1>One guest, <em>fully known</em> — the moment they arrive.</h1>
+    <p class="sub">Employees, not agents, in front of the guest.</p>
+    <p class="setup">Four Seasons doesn't need another screen. It needs a trusted guest context that follows the employee wherever service happens — front desk, concierge, or mobile — reading from one verified Golden Profile, with live and behavioral data harmonized against it.</p>
+    <div class="scroll-cue"><span class="dot"></span> First, what's at stake</div>
+  </div>
+</section>
+
+<!-- ============ STAKES — the tension, in the slide's own words ============ -->
+<section class="stakes" id="stakes">
+  <div class="s-inner">
+    <div class="s-kicker">The problem, plainly</div>
+    <p class="s-line dim">No single source of truth — the screen shows <em>conflicting data.</em></p>
+    <p class="s-line dim">No single pane — the truth <em>never reaches the guest.</em></p>
+    <p class="s-need">Four Seasons needs <b>both.</b></p>
+  </div>
+</section>
+
+<!-- ============ ACT 1 — THE STORY ============ -->
+<section class="act-story" id="story">
+  <div class="kicker">Act One · The Moment</div>
+  <h2>Mrs. Jane Harrington arrives at the <em>George V, Paris.</em></h2>
+
+  <p class="story-p lead">She hasn't said a word yet. And in the seconds before she reaches the desk, everything the house knows about her is quietly clicking into place.</p>
+
+  <div class="build">
+    <p class="bline"><span class="q">Knows her</span>Still water. Hypoallergenic linens. A high floor, away from the elevator. <b>Already there.</b></p>
+    <p class="bline"><span class="q">Right now</span>Her daughter is checking in <b>this minute</b> — and the adjoining <b>Suite 1206</b> is ready.</p>
+    <p class="bline"><span class="q">A new signal</span>The daughter's engagement was just announced. <em>This is a celebration.</em></p>
+    <p class="bline"><span class="q">The wider party</span>The fiancé, linked — also known 1:1:1, a <b>shellfish allergy</b>, his VIP status inherited into the party.</p>
+  </div>
+
+  <p class="story-p">The colleague assembled none of it. It was simply understood — and then it became action.</p>
+
+  <div class="moment">
+    <div class="m-tag">★ Insight → Action · Agentforce</div>
+    <div class="m-line">"Set the celebration theme, adjoin the two suites, and flag the shellfish allergy before dinner."</div>
+    <div class="m-cascade">Cascades to → <b>Concierge</b> · <b>Le Cinq kitchen</b> · <b>Housekeeping</b></div>
+  </div>
+
+  <p class="story-close">Mrs. Harrington never had to explain herself. She was simply known — the moment she arrived.</p>
+</section>
+
+<!-- ============ DIVIDER ============ -->
+<section class="divider" id="how">
+  <div class="d-kicker">Act Two</div>
+  <h2>None of that is magic. <em>Here's what makes it real.</em></h2>
+  <p class="d-sub">For that moment to happen, everything the house knows about a guest has to resolve to one record — then reach the colleague in real time. Every layer below resolves to one golden record.</p>
+</section>
+
+<!-- ============ ACT 2 — THE ARCHITECTURE ============ -->
+<section class="arch">
+  <div class="arch-grid">
+    <div class="arch-steps">
+
+      <!-- STEP 1 — GOLDEN PROFILE -->
+      <div class="astep" id="a1" data-step="1">
+        <div class="s-num">One · The Foundation</div>
+        <h3>First, she becomes <em>one guest.</em></h3>
+        <p>Every system that touches a guest — the web, OPERA, the OTA and SynXis channels, enrichment — feeds one place. <strong>Informatica MDM</strong> resolves them into a single mastered record, so a new booking finds her instead of creating another version of her.</p>
+        <p class="why">Identity mastered once — <b>match · merge · maintain · purge</b>. Search before create. One record, nothing copied twice.</p>
+        <div class="mini-diagram"><div class="diagram">
+          <div class="dg-title">Data Foundation — Golden Truth</div>
+          <div class="layer sources show"><div class="lname">Sources — search before create</div>
+            <div class="chips"><span class="chip src"><span class="m">O</span>OPERA</span><span class="chip src"><span class="m">W</span>Web / Mobile</span><span class="chip src"><span class="m">S</span>OTA / SynXis</span><span class="chip src"><span class="m">+</span>Enrichment</span></div></div>
+          <div class="connector show">↓</div>
+          <div class="layer hub show"><div class="lname">Informatica MDM <span class="badge">Golden Truth</span></div>
+            <div class="hub-steps">
+              <div class="step show"><span class="tick">✓</span><b>Match</b><small>find the same guest</small></div>
+              <div class="step show"><span class="tick">✓</span><b>Merge</b><small>one profile</small></div>
+              <div class="step show"><span class="tick">✓</span><b>Maintain</b><small>keep it true</small></div>
+              <div class="step show"><span class="tick">✓</span><b>Purge</b><small>retire the rest</small></div>
+            </div>
+            <div class="golden show">GOLDEN PROFILE<small>one mastered guest</small></div>
+          </div>
+        </div></div>
+      </div>
+
+      <!-- STEP 2 — LIVE + CONTEXT -->
+      <div class="astep" id="a2" data-step="2">
+        <div class="s-num">Two · The Live Moment</div>
+        <h3>Then the house knows <em>what's happening now.</em></h3>
+        <p>The Golden Profile says who she is. <strong>MCP real-time services</strong> say what's happening this minute — reservation, room status, arrival signals the instant they change. That's how "her daughter is checking in now" is live, not last night's batch.</p>
+        <p>Alongside it, <strong>Data 360 and Databricks</strong> harmonize her history and behavior against that same record — a fast, complete view without copying the data twice.</p>
+        <div class="mini-diagram"><div class="diagram">
+          <div class="dg-title">Truth + real-time + context</div>
+          <div class="layer activate show"><div class="lname">Activation &amp; Context</div>
+            <div class="chips"><span class="chip act"><span class="m">◐</span>Data 360</span><span class="chip act"><span class="m">D</span>Databricks · zero-copy</span></div></div>
+          <div class="connector show">↓</div>
+          <div class="layer hub show"><div class="lname">Golden Profile <span class="badge">+ MCP real-time</span></div>
+            <div class="chips"><span class="chip">Reservation</span><span class="chip">Room status</span><span class="chip">Arrival</span></div>
+            <div class="golden show" style="margin-top:10px">GOLDEN PROFILE<small>who she is + what's happening now</small></div></div>
+        </div></div>
+      </div>
+
+      <!-- STEP 3 — ONE PANE -->
+      <div class="astep" id="a3" data-step="3">
+        <div class="s-num">Three · One Pane</div>
+        <h3>Then it reaches the colleague — <em>wherever they work.</em></h3>
+        <p>All of it surfaces through <strong>Guest IQ — one pane</strong> across the front desk, concierge, and mobile. Behind it, one Salesforce platform does the work: <strong>Sales Cloud</strong> wins &amp; books the stay, <strong>Marketing Cloud</strong> nurtures between visits, and <strong>Agentforce</strong> guides the colleague.</p>
+        <p class="why">The colleague, not the agent, meets the guest at the door already knowing. Every application <b>reads from the record — never around it.</b></p>
+        <div class="mini-diagram"><div class="diagram">
+          <div class="dg-title">One pane, powered by the record</div>
+          <div class="layer show"><div class="lname">Experience — Guest IQ · one pane</div>
+            <div class="chips"><span class="chip">Front desk</span><span class="chip">Concierge</span><span class="chip">Mobile</span></div></div>
+          <div class="layer show"><div class="lname">Applications</div>
+            <div class="chips"><span class="chip app"><span class="m">S</span>Sales Cloud</span><span class="chip app mk"><span class="m">M</span>Marketing Cloud</span><span class="chip app ag"><span class="m">★</span>Agentforce</span></div></div>
+          <div class="connector show">↓</div>
+          <div class="layer activate show"><div class="lname">Activation &amp; Orchestration</div>
+            <div class="chips"><span class="chip act"><span class="m">◐</span>Data 360 — unifies &amp; activates</span></div></div>
+        </div></div>
+      </div>
+
+      <!-- STEP 4 — TRUST -->
+      <div class="astep" id="a4" data-step="4">
+        <div class="s-num">Four · Trust</div>
+        <h3>And all of it is <em>governed end to end.</em></h3>
+        <p>Consent and privacy are governed in Data 360, secured by <strong>Salesforce Shield</strong> encryption, with the <strong>Einstein Trust Layer</strong> keeping agents safe and grounded — and <strong>data residency</strong> for regional and tenancy control.</p>
+        <p class="why">For a luxury brand, trust is the product. Every layer resolves to one golden record, under one trust boundary.</p>
+        <div class="mini-diagram"><div class="diagram">
+          <div class="dg-title">Trust · privacy · security — end to end</div>
+          <div class="trust-rail show"><div class="tr-h">Governed end to end</div>
+            <div class="tr-items"><span class="tri">Consent &amp; privacy in Data 360</span><span class="tri">Salesforce Shield</span><span class="tri">Einstein Trust Layer</span><span class="tri">Data residency</span></div></div>
+        </div></div>
+      </div>
+
+    </div>
+
+    <!-- DESKTOP: sticky building diagram -->
+    <div class="arch-sticky">
+      <div class="diagram" id="diagram">
+        <div class="dg-title">Target-State Architecture</div>
+        <div class="layer" id="l-exp"><div class="lname">Experience — the moment the guest feels</div>
+          <div class="chips"><span class="chip"><span class="m" style="background:var(--gold)">◆</span>Guest IQ · one pane</span></div></div>
+        <div class="layer" id="l-app"><div class="lname">Applications — the platform that acts</div>
+          <div class="chips"><span class="chip app"><span class="m">S</span>Sales Cloud</span><span class="chip app mk"><span class="m">M</span>Marketing Cloud</span><span class="chip app ag"><span class="m">★</span>Agentforce</span></div></div>
+        <div class="connector" id="c-act">↓</div>
+        <div class="layer activate" id="l-act"><div class="lname">Activation &amp; Orchestration</div>
+          <div class="chips"><span class="chip act"><span class="m">◐</span>Data 360 — unifies &amp; activates</span></div></div>
+        <div class="connector" id="c-hub">↓</div>
+        <div class="layer hub" id="l-hub"><div class="lname">Data Foundation — Informatica MDM <span class="badge">Golden Truth</span></div>
+          <div class="hub-steps">
+            <div class="step" id="s1"><span class="tick">✓</span><b>Match</b><small>find the same guest</small></div>
+            <div class="step" id="s2"><span class="tick">✓</span><b>Merge</b><small>one profile</small></div>
+            <div class="step" id="s3"><span class="tick">✓</span><b>Maintain</b><small>keep it true</small></div>
+            <div class="step" id="s4"><span class="tick">✓</span><b>Purge</b><small>retire the rest</small></div>
+          </div>
+          <div class="golden" id="golden">GOLDEN PROFILE<small>one mastered guest — every app reads from it</small></div>
+        </div>
+        <div class="connector" id="c-src">↑</div>
+        <div class="layer sources" id="l-src"><div class="lname">Sources · MCP real-time — search before create</div>
+          <div class="chips"><span class="chip src"><span class="m">O</span>OPERA</span><span class="chip src"><span class="m">W</span>Web / Mobile</span><span class="chip src"><span class="m">S</span>OTA / SynXis</span><span class="chip src"><span class="m">D</span>Databricks</span><span class="chip src"><span class="m">+</span>Enrichment</span></div></div>
+        <div class="trust-rail" id="l-trust"><div class="tr-h">Trust · Privacy · Security — end to end</div>
+          <div class="tr-items"><span class="tri">Consent &amp; privacy in Data 360</span><span class="tri">Salesforce Shield</span><span class="tri">Einstein Trust Layer</span><span class="tri">Data residency</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METRICS -->
+<section class="metrics" id="outcomes">
+  <div class="eyebrow">The Target</div>
+  <h2>What "fully known" is <em>worth.</em></h2>
+  <div class="metric-grid">
+    <div class="metric"><div class="big">70<span style="font-size:.6em">%</span><span class="arw">↑</span></div><div class="cap">Guests recognized<br>· target ·</div></div>
+    <div class="metric"><div class="big">Minutes<span class="arw">↓</span></div><div class="cap">To recognize<br>— not hours</div></div>
+    <div class="metric"><div class="big">Revenue<span class="arw">↑</span></div><div class="cap">Per stay · personalized<br>experiences</div></div>
+    <div class="metric"><div class="big">TCO<span class="arw">↓</span></div><div class="cap">One truth ·<br>fewer integrations</div></div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="roadmap" id="roadmap">
+  <div class="rhead">
+    <div class="eyebrow">Getting There</div>
+    <h2>Prove it on one journey, then <em>expand and scale.</em></h2>
+    <div class="rsub">An illustrative path — sequenced to earn confidence before breadth.</div>
+  </div>
+  <div class="phases">
+    <div class="phase">
+      <div class="pnum">Phase 1 · Pilot</div><h3>Prove the moment</h3>
+      <ul><li>Stand up the one-pane experience for a single priority journey — arrival &amp; check-in</li><li>Read from the Golden Profile for that journey</li><li>Show recognition at the desk, live</li></ul>
+    </div>
+    <div class="phase">
+      <div class="pnum">Phase 2 · Expand</div><h3>Widen the signals</h3>
+      <ul><li>Extend real-time MCP signals across more touchpoints</li><li>Bring Data 360 context &amp; Databricks history into the view</li><li>Activate segments into Marketing Cloud</li></ul>
+    </div>
+    <div class="phase">
+      <div class="pnum">Phase 3 · Scale</div><h3>Everywhere work happens</h3>
+      <ul><li>Roll the one pane across concierge, mobile &amp; service teams</li><li>Ground Agentforce on the unified profile</li><li>Operate under one trust &amp; privacy boundary</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST FOOTER -->
+<section class="trustfoot">
+  <div class="eyebrow">Trust &amp; Security</div>
+  <h2>For a luxury brand, trust is the product.</h2>
+  <p class="lede">The goal is simple: every employee sees the same trusted guest context, and every guest feels known without having to explain themselves.</p>
+  <div class="trust-badges">
+    <span class="tb">Consent &amp; privacy governed in <b>Data 360</b></span>
+    <span class="tb"><b>Salesforce Shield</b> encryption</span>
+    <span class="tb"><b>Einstein Trust Layer</b> — safe, grounded agents</span>
+    <span class="tb"><b>Data residency</b> — region &amp; tenancy control</span>
+  </div>
+  <div class="endnote">This target-state narrative is drawn from the Four Seasons × Salesforce target-state slides. Mrs. Jane Harrington is an illustrative scenario used to show the intended guest experience. The roadmap is an illustrative sequence, not a committed timeline.</div>
+</section>
+
+<div class="colophon">Four Seasons × Salesforce — Target State</div>
+
+<script>
+  // Hero video: flip to light theme only if video actually loads
+  (function(){
+    var v=document.getElementById('heroVideo'); if(!v) return;
+    v.addEventListener('loadeddata',function(){ if(v.videoWidth>0){ v.classList.add('loaded'); document.body.classList.add('has-video'); v.play().catch(function(){}); }});
+    v.addEventListener('error',function(){});
+    try{ v.load(); }catch(e){}
+  })();
+
+  // Act 2 architecture build (desktop sticky; mobile shows slices via CSS)
+  var steps=document.querySelectorAll('.astep');
+  function show(id,on){ if(on===undefined)on=true; var el=document.getElementById(id); if(el) el.classList.toggle('show',on); }
+  function applyStep(step){
+    var s1=step>=1; // foundation: sources + hub + golden
+    show('l-src',s1); show('c-src',s1); show('l-hub',s1);
+    ['s1','s2','s3','s4'].forEach(function(s,i){ setTimeout(function(){ show(s,s1); }, s1?180*(i+1):0); });
+    setTimeout(function(){ show('golden',s1); }, s1?1000:0);
+    var s2=step>=2; show('l-act',s2); show('c-act',s2 && step>=3); // activation appears step2, its ↓ connector when apps arrive
+    var s3=step>=3; show('l-exp',s3); show('l-app',s3); show('c-act',s3); show('c-hub',s3);
+    var s4=step>=4; show('l-trust',s4);
+  }
+  var current=1;
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('active'); var s=parseInt(e.target.dataset.step,10); current=Math.max(current,s); applyStep(current); }
+      else{ e.target.classList.remove('active'); }
+    });
+  },{threshold:.5});
+  steps.forEach(function(s){ io.observe(s); });
+  applyStep(current);
+
+  // Act 1 reveals — the stakes beat, and Jane's tightening build lines.
+  // Cinematic restraint: each element fades + rises once, then stays.
+  var revealIO=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); revealIO.unobserve(e.target); } });
+  },{threshold:.35});
+  var stakes=document.querySelector('.stakes'); if(stakes) revealIO.observe(stakes);
+  // stagger the build lines so the scene tightens line by line
+  var lineIO=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ var el=e.target; var i=+el.dataset.i||0; setTimeout(function(){ el.classList.add('in'); }, i*120); lineIO.unobserve(el); }
+    });
+  },{threshold:.6});
+  document.querySelectorAll('.build .bline').forEach(function(l,i){ l.dataset.i=i; lineIO.observe(l); });
+</script>
+</body>
+</html>

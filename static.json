@@ -1,0 +1,18 @@
+{
+  "_comment_1": "Heroku static buildpack config. Docs: https://github.com/heroku/heroku-buildpack-static",
+  "_comment_2": "No password gate on this version. HTTPS is forced and search indexing is blocked.",
+
+  "root": ".",
+  "clean_urls": true,
+  "https_only": true,
+
+  "headers": {
+    "/**": {
+      "X-Robots-Tag": "noindex, nofollow, noarchive, nosnippet",
+      "Cache-Control": "public, max-age=300, must-revalidate",
+      "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+      "X-Content-Type-Options": "nosniff",
+      "Referrer-Policy": "no-referrer-when-downgrade"
+    }
+  }
+}
