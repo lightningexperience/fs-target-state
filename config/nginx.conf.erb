@@ -1,0 +1,52 @@
+daemon off;
+# Heroku dynos have at least 4 cores.
+worker_processes <%= ENV['NGINX_WORKERS'] || 4 %>;
+
+events {
+	use epoll;
+	accept_mutex on;
+	worker_connections <%= ENV['NGINX_WORKER_CONNECTIONS'] || 1024 %>;
+}
+
+http {
+	gzip on;
+	gzip_comp_level 5;
+	gzip_min_length 256;
+	gzip_proxied any;
+	gzip_types application/javascript text/css text/plain application/json image/svg+xml;
+
+	server_tokens off;
+
+	include mime.types;
+	default_type application/octet-stream;
+	sendfile on;
+
+	# Must read the body in 5 seconds.
+	client_body_timeout 5s;
+	client_header_timeout 5s;
+
+	server {
+		listen <%= ENV["PORT"] %>;
+		server_name _;
+		keepalive_timeout 5;
+		root /app;
+		index index.html;
+		port_in_redirect off;
+
+		# --- Force HTTPS (Heroku terminates TLS at the router and sets this header) ---
+		if ($http_x_forwarded_proto != "https") {
+			return 301 https://$host$request_uri;
+		}
+
+		# --- Security + no-index headers on every response ---
+		add_header X-Robots-Tag "noindex, nofollow, noarchive, nosnippet" always;
+		add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+		add_header X-Content-Type-Options "nosniff" always;
+		add_header Referrer-Policy "no-referrer-when-downgrade" always;
+		add_header Cache-Control "public, max-age=300, must-revalidate" always;
+
+		location / {
+			try_files $uri $uri/ =404;
+		}
+	}
+}
