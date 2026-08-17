@@ -223,6 +223,31 @@
   .tb{font-family:-apple-system,sans-serif;font-size:13px;color:var(--navy-soft);padding:11px 18px;border:1px solid var(--line);border-radius:30px;background:var(--paper);box-shadow:var(--shadow);}
   .tb b{color:var(--navy);font-weight:600;}
   .endnote{max-width:640px;margin:56px auto 0;padding-top:28px;border-top:1px solid var(--line);font-family:-apple-system,sans-serif;font-size:12px;color:var(--ink-faint);line-height:1.7;text-align:center;}
+  /* trust — the fear line (CEO's-eye), the three pillars, the direct close */
+  .trustfoot .lede.fear{max-width:54ch;color:var(--ink);font-size:clamp(17px,2vw,20px);margin-bottom:14px;
+    opacity:0;transform:translateY(16px);transition:opacity .8s ease,transform .8s ease;}
+  .trustfoot .lede.fear b{color:var(--navy);font-weight:600;}
+  .trustfoot .fear-note{font-family:-apple-system,sans-serif;font-size:14px;color:var(--ink-faint);max-width:52ch;margin:0 auto 46px;
+    opacity:0;transform:translateY(16px);transition:opacity .8s ease .1s,transform .8s ease .1s;}
+  .trustfoot.in .lede.fear,.trustfoot.in .fear-note{opacity:1;transform:none;}
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:1000px;margin:0 auto 4px;text-align:left;}
+  @media(max-width:780px){.pillars{grid-template-columns:1fr;gap:16px;max-width:520px;}}
+  .pillar{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:26px 24px;box-shadow:var(--shadow);
+    opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease;}
+  .pillar.in{opacity:1;transform:none;}
+  .pillar .p-h{font-family:-apple-system,sans-serif;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:10px;}
+  .pillar .p-h::before{content:"";width:22px;height:1px;background:var(--gold-soft);flex:none;}
+  .pillar h3{font-size:20px;font-weight:400;color:var(--navy);line-height:1.25;margin-bottom:12px;}
+  .pillar h3 em{font-style:italic;color:var(--gold);}
+  .pillar p{font-size:14.5px;color:var(--ink-soft);line-height:1.6;}
+  .pillar p b{color:var(--ink);font-weight:600;}
+  .trust-close{max-width:60ch;margin:52px auto 0;
+    opacity:0;transform:translateY(16px);transition:opacity .8s ease,transform .8s ease;}
+  .trustfoot.in .trust-close{opacity:1;transform:none;transition-delay:.2s;}
+  .trust-close .tc-line{font-size:clamp(19px,2.3vw,25px);color:var(--navy);font-style:italic;line-height:1.4;margin-bottom:16px;}
+  .trust-close .tc-line em{color:var(--gold);font-style:italic;}
+  .trust-close .tc-growth{font-family:-apple-system,sans-serif;font-size:15px;color:var(--ink-soft);line-height:1.65;}
+  .trust-close .tc-growth b{color:var(--navy);font-weight:600;}
   .colophon{text-align:center;padding:30px;font-family:-apple-system,sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);background:var(--paper);}
 
   /* ===== MOBILE: architecture stops being side-by-side ===== */
@@ -246,6 +271,7 @@
     *{animation:none!important;transition:none!important;}
     .layer,.step,.golden,.connector,.trust-rail,.astep{opacity:1!important;transform:none!important;max-height:none!important;}
     .bline,.stakes .s-kicker,.stakes .s-line,.stakes .s-need{opacity:1!important;transform:none!important;}
+    .pillar,.trustfoot .lede.fear,.trustfoot .fear-note,.trust-close{opacity:1!important;transform:none!important;}
   }
 </style>
 </head>
@@ -463,17 +489,36 @@
 </section>
 
 <!-- TRUST FOOTER -->
-<section class="trustfoot">
-  <div class="eyebrow">Trust &amp; Security</div>
-  <h2>For a luxury brand, trust is the product.</h2>
-  <p class="lede">The goal is simple: every employee sees the same trusted guest context, and every guest feels known without having to explain themselves.</p>
-  <div class="trust-badges">
-    <span class="tb">Consent &amp; privacy governed in <b>Data 360</b></span>
-    <span class="tb"><b>Salesforce Shield</b> encryption</span>
-    <span class="tb"><b>Einstein Trust Layer</b> — safe, grounded agents</span>
-    <span class="tb"><b>Data residency</b> — region &amp; tenancy control</span>
+<section class="trustfoot" id="trust">
+  <div class="eyebrow">Guest Privacy, Consent &amp; Auditability</div>
+  <h2>She only shares this much because she's <em>never had reason not to.</em></h2>
+  <p class="lede fear">Everything that made her moment possible — the allergy, the celebration, the quiet preferences — she told you. And a luxury relationship turns on a single fact: <b>it takes one mishandled detail to end that.</b> A preference used in the wrong place. A surprise that leaks to the wrong channel. An assistant that says something it shouldn't.</p>
+  <p class="fear-note">So the same profile that knows her is the profile that protects her — by design, not by policy after the fact.</p>
+
+  <div class="pillars">
+    <div class="pillar" data-p="0">
+      <div class="p-h">Consent, governed</div>
+      <h3>She decides <em>what's used</em> — and it's honored.</h3>
+      <p>Consent and privacy are governed in <b>Data 360</b>, and her record stays where it belongs through <b>data residency</b> — regional and tenancy control that keeps her data compliant with global privacy regulations wherever she stays.</p>
+    </div>
+    <div class="pillar" data-p="1">
+      <div class="p-h">Guarded in the moment</div>
+      <h3>The intelligence stays <em>on the guardrails.</em></h3>
+      <p>When Agentforce guides the colleague, the <b>Einstein Trust Layer</b> keeps it grounded and safe — acting only on what it should, so the celebration surprise never reaches the wrong person and no detail is used out of turn.</p>
+    </div>
+    <div class="pillar" data-p="2">
+      <div class="p-h">Provable, always</div>
+      <h3>Every use of her profile is <em>accountable.</em></h3>
+      <p>Because everything reads from one governed record, every access is traceable — the <b>auditability</b> that lets you demonstrate, not just assert, conformance with global privacy regulations. Trust you can show a regulator is trust a board can stand behind.</p>
+    </div>
   </div>
-  <div class="endnote">This target-state narrative is drawn from the Four Seasons × Salesforce target-state slides. Mrs. Jane Harrington is an illustrative scenario used to show the intended guest experience. The roadmap is an illustrative sequence, not a committed timeline.</div>
+
+  <div class="trust-close">
+    <p class="tc-line">Handled this way, privacy isn't the brake on the relationship. <em>It's what lets the relationship deepen.</em></p>
+    <p class="tc-growth">The guest who trusts you shares more; the guest who shares more is served better; the guest served better <b>returns, spends more, and stays loyal.</b> Governed trust is not a cost of doing business — it's the engine underneath retention, share of wallet, and lifetime value. For a luxury brand, that is the growth story.</p>
+  </div>
+
+  <div class="endnote">This target-state narrative is drawn from the Four Seasons × Salesforce target-state materials. Mrs. Jane Harrington is an illustrative scenario used to show the intended guest experience. The roadmap is an illustrative sequence, not a committed timeline.</div>
 </section>
 
 <div class="colophon">Four Seasons × Salesforce — Target State</div>
@@ -515,6 +560,7 @@
     entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); revealIO.unobserve(e.target); } });
   },{threshold:.35});
   var stakes=document.querySelector('.stakes'); if(stakes) revealIO.observe(stakes);
+  var trustfoot=document.querySelector('.trustfoot'); if(trustfoot) revealIO.observe(trustfoot);
   // stagger the build lines so the scene tightens line by line
   var lineIO=new IntersectionObserver(function(entries){
     entries.forEach(function(e){
@@ -522,6 +568,13 @@
     });
   },{threshold:.6});
   document.querySelectorAll('.build .bline').forEach(function(l,i){ l.dataset.i=i; lineIO.observe(l); });
+  // trust pillars fade in, one after another
+  var pillarIO=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ var el=e.target; var i=+el.dataset.p||0; setTimeout(function(){ el.classList.add('in'); }, i*150); pillarIO.unobserve(el); }
+    });
+  },{threshold:.4});
+  document.querySelectorAll('.pillar').forEach(function(p){ pillarIO.observe(p); });
 </script>
 </body>
 </html>
