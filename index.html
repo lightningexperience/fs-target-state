@@ -102,21 +102,21 @@
   .moment .m-cascade b{color:var(--gold-soft);font-weight:600;}
   .story-close{font-size:clamp(18px,2.1vw,22px);color:var(--navy);font-style:italic;margin:34px 0 0;line-height:1.5;}
 
-  /* ---------- STAKES — dark tension beat before Jane ---------- */
+  /* ---------- STAKES — softened, non-accusatory problem statement ---------- */
   .stakes{background:linear-gradient(160deg,#141d28 0%,#1c2a3a 60%,#22323f 100%);color:#e8ecf1;
     padding:120px 8vw;border-top:1px solid var(--line);}
   .stakes .s-inner{max-width:820px;margin:0 auto;}
   .stakes .s-kicker{font-family:-apple-system,sans-serif;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-soft);margin-bottom:34px;
     opacity:0;transform:translateY(14px);transition:opacity .8s ease,transform .8s ease;}
-  .stakes .s-line{font-size:clamp(24px,3.6vw,42px);font-weight:400;line-height:1.28;letter-spacing:-.01em;color:#fff;margin:0 0 22px;max-width:22ch;
+  .stakes .s-body{font-size:clamp(19px,2.3vw,26px);font-weight:400;line-height:1.45;letter-spacing:-.005em;color:#e8ecf1;margin:0 0 22px;max-width:36ch;
     opacity:0;transform:translateY(18px);transition:opacity .9s ease,transform .9s ease;}
-  .stakes .s-line em{font-style:italic;color:var(--gold-soft);}
-  .stakes .s-line.dim{color:#9fb0c0;}
-  .stakes .s-need{font-size:clamp(20px,2.6vw,30px);font-weight:400;color:#fff;margin-top:20px;max-width:24ch;
+  .stakes .s-body em{font-style:italic;color:var(--gold-soft);}
+  .stakes .s-body b{color:#fff;font-weight:600;}
+  .stakes .s-need{font-size:clamp(20px,2.6vw,30px);font-weight:400;color:#fff;margin-top:20px;max-width:34ch;
     opacity:0;transform:translateY(18px);transition:opacity .9s ease,transform .9s ease;}
   .stakes .s-need b{color:var(--gold-soft);font-weight:600;}
-  .stakes.in .s-kicker,.stakes.in .s-line,.stakes.in .s-need{opacity:1;transform:none;}
-  .stakes.in .s-line:nth-of-type(2){transition-delay:.15s;}
+  .stakes.in .s-kicker,.stakes.in .s-body,.stakes.in .s-need{opacity:1;transform:none;}
+  .stakes.in .s-body:nth-of-type(2){transition-delay:.15s;}
   .stakes.in .s-need{transition-delay:.35s;}
 
   /* ---------- ACT DIVIDER ---------- */
@@ -130,8 +130,7 @@
   /* =========================================================
      ACT 2 — THE ARCHITECTURE (one continuous build)
      Desktop: captions left, sticky building diagram right.
-     Mobile: caption then its diagram slice, stacked — but this is
-     ONE register now (all architecture), so no whiplash.
+     Mobile: caption then its diagram slice, stacked.
      ========================================================= */
   .arch{max-width:1320px;margin:0 auto;}
   .arch-grid{display:grid;grid-template-columns:1fr 1fr;}
@@ -148,16 +147,19 @@
   .astep p strong{color:var(--ink);font-weight:600;}
   .astep .why{font-family:-apple-system,sans-serif;font-size:13.5px;color:var(--ink-faint);max-width:42ch;margin-top:4px;line-height:1.6;}
   .astep .why b{color:var(--navy-soft);font-weight:600;}
+  .astep .impact{font-family:-apple-system,sans-serif;font-size:13px;color:var(--gold);letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin-top:18px;display:flex;align-items:center;gap:10px;}
+  .astep .impact::before{content:"";width:26px;height:1px;background:var(--gold-soft);}
 
   /* diagram */
-  .diagram{width:100%;max-width:520px;background:var(--paper-2);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-lg);padding:24px 22px;}
+  .diagram{width:100%;max-width:540px;background:var(--paper-2);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-lg);padding:24px 22px;}
   .diagram .dg-title{font-family:-apple-system,sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);text-align:center;margin-bottom:18px;}
   .layer{border:0 solid var(--line);border-radius:12px;background:var(--paper);max-height:0;padding:0 14px;margin-bottom:0;overflow:hidden;opacity:0;transform:translateY(10px);
     transition:max-height .55s ease,padding .45s ease,margin .45s ease,border-width .3s ease,opacity .5s ease .1s,transform .5s ease .1s,border-color .6s ease,background .6s ease;}
-  .layer.show{max-height:360px;padding:12px 14px;margin-bottom:12px;border-width:1px;opacity:1;transform:none;}
+  .layer.show{max-height:520px;padding:12px 14px;margin-bottom:12px;border-width:1px;opacity:1;transform:none;}
   .layer.hub.show{border-width:1.5px;}
-  .layer .lname{font-family:-apple-system,sans-serif;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:9px;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  .layer .lname{font-family:-apple-system,sans-serif;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:9px;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;}
   .layer .lname .badge{font-size:9px;letter-spacing:.1em;padding:2px 7px;border-radius:20px;background:var(--gold-bg);color:var(--accent);font-weight:700;white-space:nowrap;}
+  .layer .lname .ai-pill{font-size:9.5px;letter-spacing:.12em;padding:3px 9px;border-radius:20px;background:linear-gradient(135deg,var(--gold),var(--gold-soft));color:#fff;font-weight:800;white-space:nowrap;box-shadow:0 2px 6px rgba(154,123,79,.35);text-transform:uppercase;}
   .chips{display:flex;flex-wrap:wrap;gap:7px;}
   .chip{font-family:-apple-system,sans-serif;font-size:11.5px;padding:6px 11px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--navy-soft);white-space:nowrap;display:flex;align-items:center;gap:6px;}
   .chip .m{width:15px;height:15px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:9px;color:#fff;}
@@ -170,60 +172,40 @@
   .step.show{opacity:1;transform:none;}
   .step .tick{width:16px;height:16px;border-radius:50%;background:var(--gold);color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;flex:none;}
   .step b{font-weight:600;} .step small{color:var(--ink-faint);margin-left:auto;font-size:10.5px;}
+  .ai-note{font-family:-apple-system,sans-serif;font-size:10.5px;color:var(--navy-soft);line-height:1.5;margin-top:9px;padding:8px 10px;border-radius:7px;background:rgba(154,123,79,.08);border:1px solid rgba(154,123,79,.18);}
+  .ai-note b{color:var(--accent);font-weight:700;}
   .golden{text-align:center;padding:11px;border-radius:9px;margin-top:10px;background:linear-gradient(135deg,var(--gold),var(--gold-soft));color:#fff;font-family:-apple-system,sans-serif;font-weight:700;font-size:12.5px;letter-spacing:.12em;box-shadow:0 6px 16px rgba(154,123,79,.32);opacity:0;transform:scale(.9);transition:opacity .6s ease,transform .6s ease;}
   .golden.show{opacity:1;transform:none;}
   .golden small{display:block;font-weight:500;font-size:10px;letter-spacing:.06em;opacity:.9;margin-top:3px;}
-  .chip.app .m{background:#1c6bba;} .chip.app.mk .m{background:#e0723a;} .chip.app.ag .m{background:var(--gold);}
+  .chip.app .m{background:#1c6bba;} .chip.app.mk .m{background:#e0723a;} .chip.app.ag .m{background:var(--gold);} .chip.app.sv .m{background:#3a6b9a;} .chip.app.tb .m{background:#2b6b47;} .chip.app.pz .m{background:#7a4a8a;}
+  .chip.exp .m{background:var(--gold);}
   .layer.activate{background:linear-gradient(180deg,#f3f7f7,#e9f0f0);border-color:#cfe0e0;}
   .layer.activate .lname{color:var(--teal);}
   .chip.act .m{background:var(--teal);}
   .connector{text-align:center;color:var(--gold-soft);font-size:16px;line-height:1;max-height:0;margin:0;overflow:hidden;opacity:0;transition:max-height .4s ease,margin .4s ease,opacity .5s ease;}
   .connector.show{opacity:1;max-height:22px;margin:-4px 0 4px;}
-  .trust-rail{border-radius:10px;background:var(--navy);color:#dfe6ee;overflow:hidden;max-height:0;padding:0 14px;margin-top:0;opacity:0;transform:translateY(10px);transition:max-height .55s ease,padding .45s ease,margin .45s ease,opacity .6s ease,transform .6s ease;}
-  .trust-rail.show{opacity:1;transform:none;max-height:360px;padding:12px 14px;margin-top:14px;}
-  .trust-rail .tr-h{font-family:-apple-system,sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-soft);font-weight:700;margin-bottom:8px;}
-  .trust-rail .tr-items{display:flex;flex-wrap:wrap;gap:6px;}
-  .trust-rail .tri{font-family:-apple-system,sans-serif;font-size:11px;padding:4px 9px;border-radius:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#cdd6df;}
+  .interop-note{font-family:-apple-system,sans-serif;font-size:10px;color:var(--ink-faint);text-align:center;margin-top:10px;font-style:italic;letter-spacing:.02em;}
 
   /* ---------- metrics ---------- */
   .metrics{background:linear-gradient(135deg,#1c2a3a,#243848);color:#fff;padding:90px 8vw;text-align:center;}
   .metrics .eyebrow{font-family:-apple-system,sans-serif;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-soft);margin-bottom:16px;}
   .metrics h2{font-size:clamp(24px,3vw,36px);font-weight:400;margin-bottom:52px;color:#fff;}
   .metrics h2 em{font-style:italic;color:var(--gold-soft);}
-  .metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;max-width:1000px;margin:0 auto;}
-  @media(max-width:760px){.metric-grid{grid-template-columns:repeat(2,1fr);gap:40px 20px;}}
-  .metric .big{font-size:clamp(38px,6vw,64px);font-family:-apple-system,sans-serif;font-weight:200;color:var(--gold-soft);line-height:1;}
-  .metric .big .arw{font-size:.55em;vertical-align:middle;}
+  .metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;max-width:920px;margin:0 auto;}
+  @media(max-width:760px){.metric-grid{grid-template-columns:1fr;gap:40px 20px;max-width:420px;}}
+  .metric .big{font-size:clamp(28px,4vw,44px);font-family:-apple-system,sans-serif;font-weight:300;color:var(--gold-soft);line-height:1.15;letter-spacing:-.005em;}
+  .metric .big .arw{font-size:.7em;vertical-align:middle;margin-left:4px;}
   .metric .cap{font-family:-apple-system,sans-serif;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#aeb9c4;margin-top:14px;line-height:1.5;}
-
-  /* ---------- roadmap ---------- */
-  .roadmap{background:var(--paper);padding:88px 8vw;border-top:1px solid var(--line);}
-  .roadmap .rhead{text-align:center;max-width:60ch;margin:0 auto 56px;}
-  .roadmap .eyebrow{font-family:-apple-system,sans-serif;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
-  .roadmap h2{font-size:clamp(24px,3.2vw,38px);font-weight:400;color:var(--navy);}
-  .roadmap h2 em{font-style:italic;color:var(--gold);}
-  .roadmap .rsub{font-family:-apple-system,sans-serif;font-size:14px;color:var(--ink-faint);margin-top:14px;}
-  .phases{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:1050px;margin:0 auto;}
-  @media(max-width:760px){.phases{grid-template-columns:1fr;gap:16px;}}
-  .phase{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:26px 24px;box-shadow:var(--shadow);position:relative;overflow:hidden;}
-  .phase::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-soft));}
-  .phase .pnum{font-family:-apple-system,sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:6px;}
-  .phase h3{font-size:22px;font-weight:400;color:var(--navy);margin-bottom:14px;}
-  .phase ul{list-style:none;}
-  .phase li{font-family:-apple-system,sans-serif;font-size:13.5px;color:var(--ink-soft);padding:7px 0 7px 20px;position:relative;line-height:1.5;border-bottom:1px solid var(--line);}
-  .phase li:last-child{border-bottom:none;}
-  .phase li::before{content:"→";position:absolute;left:0;color:var(--gold-soft);}
 
   /* ---------- trust footer ---------- */
   .trustfoot{background:var(--paper-2);padding:80px 8vw 60px;border-top:1px solid var(--line);text-align:center;}
   .trustfoot .eyebrow{font-family:-apple-system,sans-serif;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;}
-  .trustfoot h2{font-size:clamp(24px,3.2vw,38px);font-weight:400;color:var(--navy);font-style:italic;max-width:22ch;margin:0 auto 18px;}
+  .trustfoot h2{font-size:clamp(24px,3.2vw,38px);font-weight:400;color:var(--navy);font-style:italic;max-width:26ch;margin:0 auto 18px;}
   .trustfoot .lede{font-size:17px;color:var(--ink-soft);max-width:60ch;margin:0 auto 40px;}
   .trust-badges{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;max-width:820px;margin:0 auto;}
   .tb{font-family:-apple-system,sans-serif;font-size:13px;color:var(--navy-soft);padding:11px 18px;border:1px solid var(--line);border-radius:30px;background:var(--paper);box-shadow:var(--shadow);}
   .tb b{color:var(--navy);font-weight:600;}
   .endnote{max-width:640px;margin:56px auto 0;padding-top:28px;border-top:1px solid var(--line);font-family:-apple-system,sans-serif;font-size:12px;color:var(--ink-faint);line-height:1.7;text-align:center;}
-  /* trust — the fear line (CEO's-eye), the three pillars, the direct close */
   .trustfoot .lede.fear{max-width:54ch;color:var(--ink);font-size:clamp(17px,2vw,20px);margin-bottom:14px;
     opacity:0;transform:translateY(16px);transition:opacity .8s ease,transform .8s ease;}
   .trustfoot .lede.fear b{color:var(--navy);font-weight:600;}
@@ -241,6 +223,9 @@
   .pillar h3 em{font-style:italic;color:var(--gold);}
   .pillar p{font-size:14.5px;color:var(--ink-soft);line-height:1.6;}
   .pillar p b{color:var(--ink);font-weight:600;}
+  .trust-pillars-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:900px;margin:32px auto 0;}
+  .trust-pillars-row .tpr{font-family:-apple-system,sans-serif;font-size:12.5px;color:var(--navy-soft);padding:8px 14px;border:1px solid var(--line);border-radius:24px;background:var(--paper);}
+  .trust-pillars-row .tpr b{color:var(--navy);font-weight:600;}
   .trust-close{max-width:60ch;margin:52px auto 0;
     opacity:0;transform:translateY(16px);transition:opacity .8s ease,transform .8s ease;}
   .trustfoot.in .trust-close{opacity:1;transform:none;transition-delay:.2s;}
@@ -261,16 +246,15 @@
   .mini-diagram{display:none;}
   @media(max-width:900px){
     .mini-diagram .diagram{max-width:100%;padding:18px 16px;}
-    .mini-diagram .layer{max-height:400px;padding:12px 14px;margin-bottom:10px;border-width:1px;opacity:1;transform:none;}
+    .mini-diagram .layer{max-height:600px;padding:12px 14px;margin-bottom:10px;border-width:1px;opacity:1;transform:none;}
     .mini-diagram .layer.hub{border-width:1.5px;}
     .mini-diagram .step,.mini-diagram .golden{opacity:1;transform:none;}
     .mini-diagram .connector{opacity:1;max-height:22px;margin:-4px 0 4px;}
-    .mini-diagram .trust-rail{opacity:1;transform:none;max-height:400px;padding:12px 14px;margin-top:12px;}
   }
   @media(prefers-reduced-motion: reduce){
     *{animation:none!important;transition:none!important;}
-    .layer,.step,.golden,.connector,.trust-rail,.astep{opacity:1!important;transform:none!important;max-height:none!important;}
-    .bline,.stakes .s-kicker,.stakes .s-line,.stakes .s-need{opacity:1!important;transform:none!important;}
+    .layer,.step,.golden,.connector,.astep{opacity:1!important;transform:none!important;max-height:none!important;}
+    .bline,.stakes .s-kicker,.stakes .s-body,.stakes .s-need{opacity:1!important;transform:none!important;}
     .pillar,.trustfoot .lede.fear,.trustfoot .fear-note,.trust-close{opacity:1!important;transform:none!important;}
   }
 </style>
@@ -283,7 +267,7 @@
     <a href="#story">The Moment</a>
     <a href="#how">How It's Powered</a>
     <a href="#outcomes">Outcomes</a>
-    <a href="#roadmap">Roadmap</a>
+    <a href="#trust">Trust</a>
   </nav>
 </div>
 
@@ -297,18 +281,17 @@
     <div class="eyebrow">Salesforce Target State</div>
     <h1>One guest, <em>fully known</em> — the moment they arrive.</h1>
     <p class="sub">Employees, not agents, in front of the guest.</p>
-    <p class="setup">Four Seasons doesn't need another screen. It needs a trusted guest context that follows the employee wherever service happens — front desk, concierge, or mobile — reading from one verified Golden Profile, with live and behavioral data harmonized against it.</p>
+    <p class="setup">Four Seasons doesn't need another screen. It needs a trusted guest context that follows the employee wherever service happens — front desk, concierge, or mobile — reading from one verified Golden Profile, with live and behavioral engagement history unified with the Golden Profile.</p>
     <div class="scroll-cue"><span class="dot"></span> First, what's at stake</div>
   </div>
 </section>
 
-<!-- ============ STAKES — the tension, in the slide's own words ============ -->
+<!-- ============ STAKES — softened problem statement ============ -->
 <section class="stakes" id="stakes">
   <div class="s-inner">
     <div class="s-kicker">The problem, plainly</div>
-    <p class="s-line dim">No single source of truth — the screen shows <em>conflicting data.</em></p>
-    <p class="s-line dim">No single pane — the truth <em>never reaches the guest.</em></p>
-    <p class="s-need">Four Seasons needs <b>both.</b></p>
+    <p class="s-body">When guest identity and context are spread across systems, <b>Four Seasons employees see incomplete or inconsistent information.</b> And when that context does not surface where service happens, <em>the guest has to repeat what Four Seasons should already know.</em></p>
+    <p class="s-need">Four Seasons needs <b>both</b>: one trusted guest profile, and a single pane of glass that brings it to Four Seasons employees.</p>
   </div>
 </section>
 
@@ -341,7 +324,7 @@
 <section class="divider" id="how">
   <div class="d-kicker">Act Two</div>
   <h2>None of that is magic. <em>Here's what makes it real.</em></h2>
-  <p class="d-sub">For that moment to happen, everything the house knows about a guest has to resolve to one record — then reach the colleague in real time. Every layer below resolves to one golden record.</p>
+  <p class="d-sub">For that moment to happen, everything the house knows about a guest has to resolve to one record — then reach the colleague in real time.</p>
 </section>
 
 <!-- ============ ACT 2 — THE ARCHITECTURE ============ -->
@@ -353,20 +336,21 @@
       <div class="astep" id="a1" data-step="1">
         <div class="s-num">One · The Foundation</div>
         <h3>First, she becomes <em>one guest.</em></h3>
-        <p>Every system that touches a guest — the web, OPERA, the OTA and SynXis channels, enrichment — feeds one place. <strong>Informatica MDM</strong> resolves them into a single mastered record, so a new booking finds her instead of creating another version of her.</p>
-        <p class="why">Identity mastered once — <b>match · merge · maintain · purge</b>. Search before create. One record, nothing copied twice.</p>
+        <p><strong>Informatica MDM</strong> unifies guest data from across Four Seasons into a single Golden Guest Profile. New guest information — whether it comes from a booking, a service interaction, a digital channel, or an Agentforce conversation — strengthens that profile instead of creating another version of the guest.</p>
+        <p class="why"><b>Match</b> finds the same guest. <b>Merge</b> creates one profile. <b>Maintain</b> keeps it true. <b>Search Before Create</b> prevents avoidable duplicates.</p>
+        <div class="impact">Recognition without repetition</div>
         <div class="mini-diagram"><div class="diagram">
           <div class="dg-title">Data Foundation — Golden Truth</div>
-          <div class="layer sources show"><div class="lname">Sources — search before create</div>
-            <div class="chips"><span class="chip src"><span class="m">O</span>OPERA</span><span class="chip src"><span class="m">W</span>Web / Mobile</span><span class="chip src"><span class="m">S</span>OTA / SynXis</span><span class="chip src"><span class="m">+</span>Enrichment</span></div></div>
+          <div class="layer sources show"><div class="lname"><span>Four Seasons Data Sources</span></div>
+            <div class="chips"><span class="chip src"><span class="m">O</span>OPERA</span><span class="chip src"><span class="m">W</span>Web / Mobile</span><span class="chip src"><span class="m">S</span>OTA / SynXis</span><span class="chip src"><span class="m">Y</span>Yacht</span><span class="chip src"><span class="m">J</span>Jet</span><span class="chip src"><span class="m">R</span>Residence</span><span class="chip src"><span class="m">T</span>OpenTable</span><span class="chip src"><span class="m">+</span>Enrichment</span></div></div>
           <div class="connector show">↓</div>
-          <div class="layer hub show"><div class="lname">Informatica MDM <span class="badge">Golden Truth</span></div>
+          <div class="layer hub show"><div class="lname"><span>Informatica MDM</span><span class="ai-pill">AI · CLAIRE</span><span class="badge">Golden Truth</span></div>
             <div class="hub-steps">
               <div class="step show"><span class="tick">✓</span><b>Match</b><small>find the same guest</small></div>
               <div class="step show"><span class="tick">✓</span><b>Merge</b><small>one profile</small></div>
               <div class="step show"><span class="tick">✓</span><b>Maintain</b><small>keep it true</small></div>
-              <div class="step show"><span class="tick">✓</span><b>Purge</b><small>retire the rest</small></div>
             </div>
+            <div class="ai-note"><b>AI-Powered MDM.</b> CLAIRE Copilot accelerates workflow design. CLAIRE GPT lets business users query mastered data in plain language.</div>
             <div class="golden show">GOLDEN PROFILE<small>one mastered guest</small></div>
           </div>
         </div></div>
@@ -376,47 +360,36 @@
       <div class="astep" id="a2" data-step="2">
         <div class="s-num">Two · The Live Moment</div>
         <h3>Then the house knows <em>what's happening now.</em></h3>
-        <p>The Golden Profile says who she is. <strong>MCP real-time services</strong> say what's happening this minute — reservation, room status, arrival signals the instant they change. That's how "her daughter is checking in now" is live, not last night's batch.</p>
-        <p>Alongside it, <strong>Data 360 and Databricks</strong> harmonize her history and behavior against that same record — a fast, complete view without copying the data twice.</p>
+        <p>The Golden Guest Profile says who she is. <strong>Real-time API services</strong> signal what is happening now — reservation, arrival, room status, and stay context as they change.</p>
+        <p><strong>Data 360</strong> brings her engagement history together with the Informatica master profile, so Four Seasons employees see both who she is and what is happening right now.</p>
+        <div class="impact">Anticipation without prompting</div>
         <div class="mini-diagram"><div class="diagram">
           <div class="dg-title">Truth + real-time + context</div>
           <div class="layer activate show"><div class="lname">Activation &amp; Context</div>
-            <div class="chips"><span class="chip act"><span class="m">◐</span>Data 360</span><span class="chip act"><span class="m">D</span>Databricks · zero-copy</span></div></div>
+            <div class="chips"><span class="chip act"><span class="m">◐</span>Data 360 — unifies engagement data with the Golden Guest Profile</span></div></div>
           <div class="connector show">↓</div>
-          <div class="layer hub show"><div class="lname">Golden Profile <span class="badge">+ MCP real-time</span></div>
-            <div class="chips"><span class="chip">Reservation</span><span class="chip">Room status</span><span class="chip">Arrival</span></div>
+          <div class="layer hub show"><div class="lname"><span>Golden Guest Profile</span><span class="badge">+ real-time API</span></div>
+            <div class="chips"><span class="chip">Reservation</span><span class="chip">Arrival</span><span class="chip">Room status</span><span class="chip">Stay context</span></div>
             <div class="golden show" style="margin-top:10px">GOLDEN PROFILE<small>who she is + what's happening now</small></div></div>
         </div></div>
       </div>
 
-      <!-- STEP 3 — ONE PANE -->
+      <!-- STEP 3 — ONE PANE / SPOG -->
       <div class="astep" id="a3" data-step="3">
         <div class="s-num">Three · One Pane</div>
         <h3>Then it reaches the colleague — <em>wherever they work.</em></h3>
-        <p>All of it surfaces through <strong>Guest IQ — one pane</strong> across the front desk, concierge, and mobile. Behind it, one Salesforce platform does the work: <strong>Sales Cloud</strong> wins &amp; books the stay, <strong>Marketing Cloud</strong> nurtures between visits, and <strong>Agentforce</strong> guides the colleague.</p>
-        <p class="why">The colleague, not the agent, meets the guest at the door already knowing. Every application <b>reads from the record — never around it.</b></p>
+        <p>Four Seasons employees should not have to search across systems to understand the guest. The same trusted context should appear wherever service happens — front desk, concierge, mobile, service, or corporate teams.</p>
+        <p><strong>Salesforce powers the engagement layer</strong>: Headless 360 brings the profile into the right experience, Agentforce guides Four Seasons employees, and every app reads from the same Golden Guest Profile instead of creating its own version of the truth.</p>
+        <div class="impact">Personalization without friction</div>
         <div class="mini-diagram"><div class="diagram">
           <div class="dg-title">One pane, powered by the record</div>
-          <div class="layer show"><div class="lname">Experience — Guest IQ · one pane</div>
-            <div class="chips"><span class="chip">Front desk</span><span class="chip">Concierge</span><span class="chip">Mobile</span></div></div>
-          <div class="layer show"><div class="lname">Applications</div>
-            <div class="chips"><span class="chip app"><span class="m">S</span>Sales Cloud</span><span class="chip app mk"><span class="m">M</span>Marketing Cloud</span><span class="chip app ag"><span class="m">★</span>Agentforce</span></div></div>
+          <div class="layer show"><div class="lname">Experience — the moment the guest feels</div>
+            <div class="chips"><span class="chip exp"><span class="m">◆</span>Guest IQ · One Pane</span><span class="chip exp"><span class="m">H</span>Headless 360</span><span class="chip exp"><span class="m">A</span>AI Concierge Assist</span></div></div>
+          <div class="layer show"><div class="lname">Applications — the platform that acts</div>
+            <div class="chips"><span class="chip app"><span class="m">S</span>Sales Cloud</span><span class="chip app sv"><span class="m">S</span>Service Cloud</span><span class="chip app mk"><span class="m">M</span>Marketing Cloud</span><span class="chip app ag"><span class="m">★</span>Agentforce</span><span class="chip app tb"><span class="m">T</span>Tableau</span><span class="chip app pz"><span class="m">P</span>Personalization</span></div></div>
           <div class="connector show">↓</div>
           <div class="layer activate show"><div class="lname">Activation &amp; Orchestration</div>
             <div class="chips"><span class="chip act"><span class="m">◐</span>Data 360 — unifies &amp; activates</span></div></div>
-        </div></div>
-      </div>
-
-      <!-- STEP 4 — TRUST -->
-      <div class="astep" id="a4" data-step="4">
-        <div class="s-num">Four · Trust</div>
-        <h3>And all of it is <em>governed end to end.</em></h3>
-        <p>Consent is governed in <strong>Data 360</strong>. <strong>Shield</strong> adds Event Monitoring &amp; Transaction Security, and <strong>Informatica</strong> carries data governance &amp; lineage — so every data point can be traced to its source. The <strong>Einstein Trust Layer</strong> keeps Agentforce grounded and gives you observability into what the agent did — all with <strong>data residency</strong> for regional and tenancy control.</p>
-        <p class="why">For a luxury brand, trust is the product. Every layer resolves to one golden record, under one trust boundary.</p>
-        <div class="mini-diagram"><div class="diagram">
-          <div class="dg-title">Trust · privacy · security — end to end</div>
-          <div class="trust-rail show"><div class="tr-h">Governed end to end</div>
-            <div class="tr-items"><span class="tri">Consent — Data 360</span><span class="tri">Shield — Event Monitoring &amp; Transaction Security</span><span class="tri">Data Governance &amp; Lineage — Informatica</span><span class="tri">Agent Observability — Einstein Trust Layer</span><span class="tri">Data residency</span></div></div>
         </div></div>
       </div>
 
@@ -426,28 +399,27 @@
     <div class="arch-sticky">
       <div class="diagram" id="diagram">
         <div class="dg-title">Target-State Architecture</div>
-        <div class="layer" id="l-exp"><div class="lname">Experience — the moment the guest feels</div>
-          <div class="chips"><span class="chip"><span class="m" style="background:var(--gold)">◆</span>Guest IQ · one pane</span></div></div>
+        <div class="layer" id="l-exp"><div class="lname"><span>Experience — the moment the guest feels</span></div>
+          <div class="chips"><span class="chip exp"><span class="m">◆</span>Guest IQ · One Pane</span><span class="chip exp"><span class="m">H</span>Headless 360</span><span class="chip exp"><span class="m">A</span>AI Concierge Assist</span></div></div>
         <div class="layer" id="l-app"><div class="lname">Applications — the platform that acts</div>
-          <div class="chips"><span class="chip app"><span class="m">S</span>Sales Cloud</span><span class="chip app mk"><span class="m">M</span>Marketing Cloud</span><span class="chip app ag"><span class="m">★</span>Agentforce</span></div></div>
+          <div class="chips"><span class="chip app"><span class="m">S</span>Sales Cloud</span><span class="chip app sv"><span class="m">S</span>Service Cloud</span><span class="chip app mk"><span class="m">M</span>Marketing Cloud</span><span class="chip app ag"><span class="m">★</span>Agentforce</span><span class="chip app tb"><span class="m">T</span>Tableau</span><span class="chip app pz"><span class="m">P</span>Personalization</span></div></div>
         <div class="connector" id="c-act">↓</div>
         <div class="layer activate" id="l-act"><div class="lname">Activation &amp; Orchestration</div>
-          <div class="chips"><span class="chip act"><span class="m">◐</span>Data 360 — unifies &amp; activates</span></div></div>
+          <div class="chips"><span class="chip act"><span class="m">◐</span><b>Data 360</b> — unifies engagement data with the Golden Guest Profile and activates experiences</span></div></div>
         <div class="connector" id="c-hub">↓</div>
-        <div class="layer hub" id="l-hub"><div class="lname">Data Foundation — Informatica MDM <span class="badge">Golden Truth</span></div>
+        <div class="layer hub" id="l-hub"><div class="lname"><span>Data Foundation — Informatica MDM</span><span class="ai-pill">AI · CLAIRE</span><span class="badge">Golden Truth</span></div>
           <div class="hub-steps">
             <div class="step" id="s1"><span class="tick">✓</span><b>Match</b><small>find the same guest</small></div>
             <div class="step" id="s2"><span class="tick">✓</span><b>Merge</b><small>one profile</small></div>
             <div class="step" id="s3"><span class="tick">✓</span><b>Maintain</b><small>keep it true</small></div>
-            <div class="step" id="s4"><span class="tick">✓</span><b>Purge</b><small>retire the rest</small></div>
           </div>
+          <div class="ai-note"><b>AI-Powered MDM.</b> CLAIRE Copilot accelerates workflow design. CLAIRE GPT lets business users query mastered data in plain language.</div>
           <div class="golden" id="golden">GOLDEN PROFILE<small>one mastered guest — every app reads from it</small></div>
         </div>
         <div class="connector" id="c-src">↑</div>
-        <div class="layer sources" id="l-src"><div class="lname">Sources · MCP real-time — search before create</div>
-          <div class="chips"><span class="chip src"><span class="m">O</span>OPERA</span><span class="chip src"><span class="m">W</span>Web / Mobile</span><span class="chip src"><span class="m">S</span>OTA / SynXis</span><span class="chip src"><span class="m">D</span>Databricks</span><span class="chip src"><span class="m">+</span>Enrichment</span></div></div>
-        <div class="trust-rail" id="l-trust"><div class="tr-h">Trust · Privacy · Security — end to end</div>
-          <div class="tr-items"><span class="tri">Consent — Data 360</span><span class="tri">Shield — Event Monitoring &amp; Transaction Security</span><span class="tri">Data Governance &amp; Lineage — Informatica</span><span class="tri">Agent Observability — Einstein Trust Layer</span><span class="tri">Data residency</span></div></div>
+        <div class="layer sources" id="l-src"><div class="lname"><span>Four Seasons Data Sources</span></div>
+          <div class="chips"><span class="chip src"><span class="m">O</span>OPERA</span><span class="chip src"><span class="m">W</span>Web / Mobile</span><span class="chip src"><span class="m">S</span>OTA / SynXis</span><span class="chip src"><span class="m">Y</span>Yacht</span><span class="chip src"><span class="m">J</span>Jet</span><span class="chip src"><span class="m">R</span>Residence</span><span class="chip src"><span class="m">T</span>OpenTable</span><span class="chip src"><span class="m">+</span>Enrichment</span></div></div>
+        <div class="interop-note">Salesforce and Informatica interoperate with Four Seasons' technology and integration stack.</div>
       </div>
     </div>
   </div>
@@ -458,42 +430,18 @@
   <div class="eyebrow">The Target</div>
   <h2>What "fully known" is <em>worth.</em></h2>
   <div class="metric-grid">
-    <div class="metric"><div class="big">70<span style="font-size:.6em">%</span><span class="arw">↑</span></div><div class="cap">Guests recognized<br>· target ·</div></div>
-    <div class="metric"><div class="big">Minutes<span class="arw">↓</span></div><div class="cap">To recognize<br>— not hours</div></div>
-    <div class="metric"><div class="big">Revenue<span class="arw">↑</span></div><div class="cap">Per stay · personalized<br>experiences</div></div>
-    <div class="metric"><div class="big">TCO<span class="arw">↓</span></div><div class="cap">One truth ·<br>fewer integrations</div></div>
-  </div>
-</section>
-
-<!-- ROADMAP -->
-<section class="roadmap" id="roadmap">
-  <div class="rhead">
-    <div class="eyebrow">Getting There</div>
-    <h2>Prove it on one journey, then <em>expand and scale.</em></h2>
-    <div class="rsub">An illustrative path — sequenced to earn confidence before breadth.</div>
-  </div>
-  <div class="phases">
-    <div class="phase">
-      <div class="pnum">Phase 1 · Pilot</div><h3>Prove the moment</h3>
-      <ul><li>Stand up the one-pane experience for a single priority journey — arrival &amp; check-in</li><li>Read from the Golden Profile for that journey</li><li>Show recognition at the desk, live</li></ul>
-    </div>
-    <div class="phase">
-      <div class="pnum">Phase 2 · Expand</div><h3>Widen the signals</h3>
-      <ul><li>Extend real-time MCP signals across more touchpoints</li><li>Bring Data 360 context &amp; Databricks history into the view</li><li>Activate segments into Marketing Cloud</li></ul>
-    </div>
-    <div class="phase">
-      <div class="pnum">Phase 3 · Scale</div><h3>Everywhere work happens</h3>
-      <ul><li>Roll the one pane across concierge, mobile &amp; service teams</li><li>Ground Agentforce on the unified profile</li><li>Operate under one trust &amp; privacy boundary</li></ul>
-    </div>
+    <div class="metric"><div class="big">More guests recognized<br>faster<span class="arw">↑</span></div><div class="cap">One trusted profile ·<br>recognized at first touch</div></div>
+    <div class="metric"><div class="big">Higher-value personalized stays<span class="arw">↑</span></div><div class="cap">Enriched context ·<br>better personalization</div></div>
+    <div class="metric"><div class="big">Lower TCO<span class="arw">↓</span></div><div class="cap">One truth ·<br>less integration complexity</div></div>
   </div>
 </section>
 
 <!-- TRUST FOOTER -->
 <section class="trustfoot" id="trust">
-  <div class="eyebrow">Guest Privacy, Consent &amp; Auditability</div>
+  <div class="eyebrow">End-to-End Security, Privacy, Auditability</div>
   <h2>She only shares this much because she's <em>never had reason not to.</em></h2>
-  <p class="lede fear">Everything that made her moment possible — the allergy, the celebration, the quiet preferences — she told you. And a luxury relationship turns on a single fact: <b>it takes one mishandled detail to end that.</b> A preference used in the wrong place. A surprise that leaks to the wrong channel. An assistant that says something it shouldn't.</p>
-  <p class="fear-note">So the same profile that knows her is the profile that protects her — by design, not by policy after the fact.</p>
+  <p class="lede fear">Guests are increasingly privacy conscious. Everything that made her moment possible — the allergy, the celebration, the quiet preferences — she told you. <b>A luxury relationship depends on trust:</b> what is known about the guest must be protected, governed, auditable, and used only in the right context.</p>
+  <p class="fear-note">Salesforce's secure platform, combined with end-to-end governance, inspires that trust and keeps Four Seasons compliant with global privacy laws.</p>
 
   <div class="pillars">
     <div class="pillar" data-p="0">
@@ -513,12 +461,21 @@
     </div>
   </div>
 
+  <div class="trust-pillars-row">
+    <span class="tpr"><b>Consent &amp; privacy</b></span>
+    <span class="tpr"><b>Security monitoring</b> · Shield</span>
+    <span class="tpr"><b>Governance &amp; lineage</b> · Informatica</span>
+    <span class="tpr"><b>Auditability</b></span>
+    <span class="tpr"><b>Data residency</b></span>
+    <span class="tpr"><b>Trusted AI</b> · Einstein Trust Layer</span>
+  </div>
+
   <div class="trust-close">
     <p class="tc-line">Handled this way, privacy isn't the brake on the relationship. <em>It's what lets the relationship deepen.</em></p>
     <p class="tc-growth">The guest who trusts you shares more; the guest who shares more is served better; the guest served better <b>returns, spends more, and stays loyal.</b> Governed trust is not a cost of doing business — it's the engine underneath retention, share of wallet, and lifetime value. For a luxury brand, that is the growth story.</p>
   </div>
 
-  <div class="endnote">This target-state narrative is drawn from the Four Seasons × Salesforce target-state materials. Mrs. Jane Harrington is an illustrative scenario used to show the intended guest experience. The roadmap is an illustrative sequence, not a committed timeline.</div>
+  <div class="endnote">This target-state narrative is drawn from the Four Seasons × Salesforce target-state materials. Mrs. Jane Harrington is an illustrative scenario used to show the intended guest experience.</div>
 </section>
 
 <div class="colophon">Four Seasons × Salesforce — Target State</div>
@@ -538,11 +495,10 @@
   function applyStep(step){
     var s1=step>=1; // foundation: sources + hub + golden
     show('l-src',s1); show('c-src',s1); show('l-hub',s1);
-    ['s1','s2','s3','s4'].forEach(function(s,i){ setTimeout(function(){ show(s,s1); }, s1?180*(i+1):0); });
-    setTimeout(function(){ show('golden',s1); }, s1?1000:0);
-    var s2=step>=2; show('l-act',s2); show('c-act',s2 && step>=3); // activation appears step2, its ↓ connector when apps arrive
+    ['s1','s2','s3'].forEach(function(s,i){ setTimeout(function(){ show(s,s1); }, s1?180*(i+1):0); });
+    setTimeout(function(){ show('golden',s1); }, s1?900:0);
+    var s2=step>=2; show('l-act',s2); show('c-act',s2 && step>=3);
     var s3=step>=3; show('l-exp',s3); show('l-app',s3); show('c-act',s3); show('c-hub',s3);
-    var s4=step>=4; show('l-trust',s4);
   }
   var current=1;
   var io=new IntersectionObserver(function(entries){
@@ -555,20 +511,17 @@
   applyStep(current);
 
   // Act 1 reveals — the stakes beat, and Jane's tightening build lines.
-  // Cinematic restraint: each element fades + rises once, then stays.
   var revealIO=new IntersectionObserver(function(entries){
     entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); revealIO.unobserve(e.target); } });
   },{threshold:.35});
   var stakes=document.querySelector('.stakes'); if(stakes) revealIO.observe(stakes);
   var trustfoot=document.querySelector('.trustfoot'); if(trustfoot) revealIO.observe(trustfoot);
-  // stagger the build lines so the scene tightens line by line
   var lineIO=new IntersectionObserver(function(entries){
     entries.forEach(function(e){
       if(e.isIntersecting){ var el=e.target; var i=+el.dataset.i||0; setTimeout(function(){ el.classList.add('in'); }, i*120); lineIO.unobserve(el); }
     });
   },{threshold:.6});
   document.querySelectorAll('.build .bline').forEach(function(l,i){ l.dataset.i=i; lineIO.observe(l); });
-  // trust pillars fade in, one after another
   var pillarIO=new IntersectionObserver(function(entries){
     entries.forEach(function(e){
       if(e.isIntersecting){ var el=e.target; var i=+el.dataset.p||0; setTimeout(function(){ el.classList.add('in'); }, i*150); pillarIO.unobserve(el); }
