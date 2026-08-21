@@ -121,15 +121,13 @@
   .stakes .s-inner{max-width:820px;margin:0 auto;}
   .stakes .s-kicker{font-family:var(--sans);font-size:var(--fs-eyebrow);letter-spacing:.3em;text-transform:uppercase;color:var(--gold-soft);margin-bottom:34px;
     opacity:0;transform:translateY(14px);transition:opacity .8s ease,transform .8s ease;}
-  /* Body copy in stakes: Georgia at h3 size — this is a "big emotional statement" per user's typography rule.
-     Bigger than paragraph body, matches the weight of the Jane story headline moments. */
-  .stakes .s-body{font-family:var(--serif);font-size:var(--fs-h3);line-height:1.55;color:#fff;margin:0 0 26px;max-width:44ch;
+  /* Body copy in stakes: Georgia at h2 size — matches the Jane story headline register. */
+  .stakes .s-body{font-family:var(--serif);font-size:var(--fs-h2);line-height:1.28;color:#fff;margin:0 0 32px;max-width:26ch;
     opacity:0;transform:translateY(18px);transition:opacity .9s ease,transform .9s ease;}
   .stakes .s-body em{font-style:italic;color:var(--gold-soft);}
-  .stakes .s-body b{color:#fff;font-weight:700;}
-  .stakes .s-need{font-family:var(--serif);font-size:var(--fs-h3);line-height:1.55;color:#fff;margin-top:24px;max-width:44ch;
+  .stakes .s-need{font-family:var(--serif);font-size:var(--fs-h2);line-height:1.28;color:#fff;margin-top:32px;max-width:26ch;
     opacity:0;transform:translateY(18px);transition:opacity .9s ease,transform .9s ease;}
-  .stakes .s-need b{color:var(--gold-soft);font-weight:700;font-style:italic;}
+  .stakes .s-need .both{color:#e88a7a;font-weight:400;letter-spacing:.02em;}
   .stakes.in .s-kicker,.stakes.in .s-body,.stakes.in .s-need{opacity:1;transform:none;}
   .stakes.in .s-body:nth-of-type(2){transition-delay:.15s;}
   .stakes.in .s-need{transition-delay:.35s;}
@@ -244,21 +242,23 @@
 
   .colophon{font-family:var(--sans);text-align:center;padding:30px;font-size:var(--fs-eyebrow);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);background:var(--paper);}
 
-  /* ===== MOBILE: architecture stops being side-by-side ===== */
-  @media(max-width:900px){
-    .arch-grid{display:block;max-width:640px;margin:0 auto;}
-    .arch-steps{padding:0 7vw;}
-    .arch-sticky{display:none;}
-    .astep{min-height:auto;padding:44px 0 6px;opacity:1;transform:none;}
-    .astep .mini-diagram{display:block;margin:14px 0 8px;}
-  }
+  /* ===== TABLET + MOBILE: architecture stops being side-by-side =====
+     Raised breakpoint to 1024px — two-column diagram can't survive below that width. */
   .mini-diagram{display:none;}
-  @media(max-width:900px){
+  @media(max-width:1024px){
+    .arch{max-width:100%;padding:0;}
+    .arch-grid{display:block !important;grid-template-columns:1fr !important;max-width:640px;margin:0 auto;}
+    .arch-steps{padding:0 7vw;}
+    .arch-sticky{display:none !important;}
+    .astep{min-height:auto;padding:44px 0 6px;opacity:1;transform:none;}
+    .astep .mini-diagram{display:block;margin:20px 0 8px;}
     .mini-diagram .diagram{max-width:100%;padding:18px 16px;}
-    .mini-diagram .layer{max-height:600px;padding:12px 14px;margin-bottom:10px;border-width:1px;opacity:1;transform:none;}
+    .mini-diagram .layer{max-height:none;padding:12px 14px;margin-bottom:10px;border-width:1px;opacity:1;transform:none;overflow:visible;}
     .mini-diagram .layer.hub{border-width:1.5px;}
     .mini-diagram .step,.mini-diagram .golden{opacity:1;transform:none;}
     .mini-diagram .connector{opacity:1;max-height:22px;margin:-4px 0 4px;}
+    .mini-diagram .chips{gap:6px;}
+    .mini-diagram .chip{font-size:13px;padding:5px 9px;}
   }
   @media(prefers-reduced-motion: reduce){
     *{animation:none!important;transition:none!important;}
@@ -289,8 +289,7 @@
   <div class="hero-inner">
     <div class="eyebrow">Salesforce Target State</div>
     <h1>One guest, <em>fully known</em> — the moment they arrive.</h1>
-    <p class="sub">Employees, not agents, in front of the guest.</p>
-    <p class="setup">Four Seasons doesn't need another screen. It needs a trusted guest context that follows the employee wherever service happens — front desk, concierge, or mobile — reading from one verified Golden Profile, with live and behavioral engagement history unified with the Golden Profile.</p>
+    <p class="setup">Four Seasons' luxury promise is effortless recognition: every guest known, anticipated, and cared for as an individual across a lifetime of stays. Every interaction should deepen the relationship — personal, seamless, consistent, and trusted.</p>
     <div class="scroll-cue"><span class="dot"></span> First, what's at stake</div>
   </div>
 </section>
@@ -299,8 +298,8 @@
 <section class="stakes" id="stakes">
   <div class="s-inner">
     <div class="s-kicker">The problem, plainly</div>
-    <p class="s-body">When guest identity and context are spread across systems, <b>Four Seasons employees see incomplete or inconsistent information.</b> And when that context does not surface where service happens, <em>the guest has to repeat what Four Seasons should already know.</em></p>
-    <p class="s-need">Four Seasons needs <b>both</b>: one trusted guest profile, and a single pane of glass that brings it to Four Seasons employees.</p>
+    <p class="s-body">Four Seasons needs more than another screen. It needs trusted guest context that reaches employees wherever service happens — front desk, concierge, or mobile — grounded in one Golden Guest Profile, live stay context, and engagement history. Otherwise, the guest is forced to repeat what Four Seasons should already know.</p>
+    <p class="s-need">Four Seasons needs <span class="both">BOTH</span>: one trusted guest profile, and a single pane of glass that brings it to Four Seasons employees.</p>
   </div>
 </section>
 
@@ -404,18 +403,15 @@
 
     </div>
 
-    <!-- DESKTOP: sticky building diagram -->
+    <!-- DESKTOP: sticky building diagram
+         Order matches the story flow (Sources at top → Experience at bottom).
+         Data flows DOWN through the stack as it is processed and reaches the team. -->
     <div class="arch-sticky">
       <div class="diagram" id="diagram">
         <div class="dg-title">Target-State Architecture</div>
-        <div class="layer" id="l-exp"><div class="lname"><span>Experience — the moment the guest feels</span></div>
-          <div class="chips"><span class="chip exp"><span class="m">◆</span>Guest IQ · One Pane</span><span class="chip exp"><span class="m">H</span>Headless 360</span><span class="chip exp"><span class="m">A</span>AI Concierge Assist</span></div></div>
-        <div class="layer" id="l-app"><div class="lname">Applications — the platform that acts</div>
-          <div class="chips"><span class="chip app"><span class="m">S</span>Sales Cloud</span><span class="chip app sv"><span class="m">S</span>Service Cloud</span><span class="chip app mk"><span class="m">M</span>Marketing Cloud</span><span class="chip app ag"><span class="m">★</span>Agentforce</span><span class="chip app tb"><span class="m">T</span>Tableau</span><span class="chip app pz"><span class="m">P</span>Personalization</span></div></div>
-        <div class="connector" id="c-act">↓</div>
-        <div class="layer activate" id="l-act"><div class="lname">Activation &amp; Orchestration</div>
-          <div class="chips"><span class="chip act"><span class="m">◐</span><b>Data 360</b> — unifies engagement data with the Golden Guest Profile and activates experiences</span></div></div>
-        <div class="connector" id="c-hub">↓</div>
+        <div class="layer sources" id="l-src"><div class="lname"><span>Four Seasons Data Sources</span></div>
+          <div class="chips"><span class="chip src"><span class="m">O</span>OPERA</span><span class="chip src"><span class="m">W</span>Web / Mobile</span><span class="chip src"><span class="m">S</span>OTA / SynXis</span><span class="chip src"><span class="m">Y</span>Yacht</span><span class="chip src"><span class="m">J</span>Jet</span><span class="chip src"><span class="m">R</span>Residence</span><span class="chip src"><span class="m">T</span>OpenTable</span><span class="chip src"><span class="m">+</span>Enrichment</span></div></div>
+        <div class="connector" id="c-src">↓</div>
         <div class="layer hub" id="l-hub"><div class="lname"><span>Data Foundation — Informatica MDM</span><span class="ai-pill">AI · CLAIRE</span><span class="badge">Golden Truth</span></div>
           <div class="hub-steps">
             <div class="step" id="s1"><span class="tick">✓</span><b>Match</b><small>find the same guest</small></div>
@@ -425,9 +421,14 @@
           <div class="ai-note"><b>AI-Powered MDM.</b> CLAIRE Copilot accelerates workflow design. CLAIRE GPT lets business users query mastered data in plain language.</div>
           <div class="golden" id="golden">GOLDEN PROFILE<small>one mastered guest — every app reads from it</small></div>
         </div>
-        <div class="connector" id="c-src">↑</div>
-        <div class="layer sources" id="l-src"><div class="lname"><span>Four Seasons Data Sources</span></div>
-          <div class="chips"><span class="chip src"><span class="m">O</span>OPERA</span><span class="chip src"><span class="m">W</span>Web / Mobile</span><span class="chip src"><span class="m">S</span>OTA / SynXis</span><span class="chip src"><span class="m">Y</span>Yacht</span><span class="chip src"><span class="m">J</span>Jet</span><span class="chip src"><span class="m">R</span>Residence</span><span class="chip src"><span class="m">T</span>OpenTable</span><span class="chip src"><span class="m">+</span>Enrichment</span></div></div>
+        <div class="connector" id="c-hub">↓</div>
+        <div class="layer activate" id="l-act"><div class="lname">Activation &amp; Orchestration</div>
+          <div class="chips"><span class="chip act"><span class="m">◐</span><b>Data 360</b> — unifies engagement data with the Golden Guest Profile and activates experiences</span></div></div>
+        <div class="connector" id="c-act">↓</div>
+        <div class="layer" id="l-app"><div class="lname">Applications — the platform that acts</div>
+          <div class="chips"><span class="chip app"><span class="m">S</span>Sales Cloud</span><span class="chip app sv"><span class="m">S</span>Service Cloud</span><span class="chip app mk"><span class="m">M</span>Marketing Cloud</span><span class="chip app ag"><span class="m">★</span>Agentforce</span><span class="chip app tb"><span class="m">T</span>Tableau</span><span class="chip app pz"><span class="m">P</span>Personalization</span></div></div>
+        <div class="layer" id="l-exp"><div class="lname"><span>Experience — the moment the guest feels</span></div>
+          <div class="chips"><span class="chip exp"><span class="m">◆</span>Guest IQ · One Pane</span><span class="chip exp"><span class="m">H</span>Headless 360</span><span class="chip exp"><span class="m">A</span>AI Concierge Assist</span></div></div>
         <div class="interop-note">Salesforce and Informatica interoperate with Four Seasons' technology and integration stack.</div>
       </div>
     </div>
