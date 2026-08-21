@@ -121,15 +121,17 @@
   .stakes .s-inner{max-width:820px;margin:0 auto;}
   .stakes .s-kicker{font-family:var(--sans);font-size:var(--fs-eyebrow);letter-spacing:.3em;text-transform:uppercase;color:var(--gold-soft);margin-bottom:34px;
     opacity:0;transform:translateY(14px);transition:opacity .8s ease,transform .8s ease;}
-  /* Body copy in stakes: Georgia at h2 size — matches the Jane story headline register. */
-  .stakes .s-body{font-family:var(--serif);font-size:var(--fs-h2);line-height:1.28;color:#fff;margin:0 0 32px;max-width:26ch;
+  /* Body copy in stakes: Georgia at h3 size — larger than paragraph body but not a display headline. */
+  .stakes .s-body{font-family:var(--serif);font-size:var(--fs-h3);line-height:1.5;color:#fff;margin:0 0 26px;max-width:56ch;
     opacity:0;transform:translateY(18px);transition:opacity .9s ease,transform .9s ease;}
   .stakes .s-body em{font-style:italic;color:var(--gold-soft);}
-  .stakes .s-need{font-family:var(--serif);font-size:var(--fs-h2);line-height:1.28;color:#fff;margin-top:32px;max-width:26ch;
+  .stakes .s-otherwise{font-family:var(--serif);font-size:var(--fs-h3);line-height:1.5;color:#fff;margin:0 0 26px;max-width:56ch;font-style:italic;color:#dfe4ea;
+    opacity:0;transform:translateY(18px);transition:opacity .9s ease,transform .9s ease;}
+  .stakes .s-need{font-family:var(--serif);font-size:var(--fs-h3);line-height:1.5;color:#fff;margin-top:26px;max-width:56ch;
     opacity:0;transform:translateY(18px);transition:opacity .9s ease,transform .9s ease;}
   .stakes .s-need .both{color:#e88a7a;font-weight:400;letter-spacing:.02em;}
-  .stakes.in .s-kicker,.stakes.in .s-body,.stakes.in .s-need{opacity:1;transform:none;}
-  .stakes.in .s-body:nth-of-type(2){transition-delay:.15s;}
+  .stakes.in .s-kicker,.stakes.in .s-body,.stakes.in .s-otherwise,.stakes.in .s-need{opacity:1;transform:none;}
+  .stakes.in .s-otherwise{transition-delay:.15s;}
   .stakes.in .s-need{transition-delay:.35s;}
 
   /* ---------- ACT DIVIDER ---------- */
@@ -263,7 +265,7 @@
   @media(prefers-reduced-motion: reduce){
     *{animation:none!important;transition:none!important;}
     .layer,.step,.golden,.connector,.astep{opacity:1!important;transform:none!important;max-height:none!important;}
-    .bline,.stakes .s-kicker,.stakes .s-body,.stakes .s-need{opacity:1!important;transform:none!important;}
+    .bline,.stakes .s-kicker,.stakes .s-body,.stakes .s-otherwise,.stakes .s-need{opacity:1!important;transform:none!important;}
     .trustfoot .lede.fear,.trustfoot .fear-note,.trust-close{opacity:1!important;transform:none!important;}
   }
 </style>
@@ -298,7 +300,8 @@
 <section class="stakes" id="stakes">
   <div class="s-inner">
     <div class="s-kicker">The problem, plainly</div>
-    <p class="s-body">Four Seasons needs more than another screen. It needs trusted guest context that reaches employees wherever service happens — front desk, concierge, or mobile — grounded in one Golden Guest Profile, live stay context, and engagement history. Otherwise, the guest is forced to repeat what Four Seasons should already know.</p>
+    <p class="s-body">Four Seasons needs trusted guest context that reaches employees wherever service happens — front desk, concierge, or mobile — grounded in one Golden Guest Profile, live stay context, and engagement history.</p>
+    <p class="s-otherwise">Otherwise, the guest is forced to repeat what Four Seasons should already know.</p>
     <p class="s-need">Four Seasons needs <span class="both">BOTH</span>: one trusted guest profile, and a single pane of glass that brings it to Four Seasons employees.</p>
   </div>
 </section>
