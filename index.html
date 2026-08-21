@@ -149,8 +149,10 @@
   .arch{max-width:1320px;margin:0 auto;}
   .arch-grid{display:grid;grid-template-columns:1fr 1fr;}
   .arch-steps{padding:0 4vw;}
-  /* Sticky diagram gets a max-height + top offset so it doesn't overflow into the black metrics section below */
-  .arch-sticky{position:sticky;top:0;height:100vh;max-height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 3vw 40px;overflow:hidden;}
+  /* Sticky diagram: sticks to top with a comfortable offset. Height auto so the whole diagram is visible.
+     No overflow clip — the diagram is naturally shorter than the arch section's total scroll length, so
+     it can't bleed into the metrics section below. */
+  .arch-sticky{position:sticky;top:80px;align-self:start;display:flex;align-items:flex-start;justify-content:center;padding:20px 3vw 40px;}
   .astep{min-height:88vh;display:flex;flex-direction:column;justify-content:center;padding:60px 0;
     opacity:.3;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
   .astep.active{opacity:1;transform:none;}
